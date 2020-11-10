@@ -3,8 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.bcserafim.projetoandroid.activity.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_produto"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Produto"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_cliente"
+        android:orderInCategory="100"
+        android:title="Cliente"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_pedido"
+        android:orderInCategory="100"
+        android:title="Pedido"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_usuario"
+        android:orderInCategory="100"
+        android:title="Usuario"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_consulta"
+        android:orderInCategory="100"
+        android:title="Consulta"
         app:showAsAction="never" />
 </menu>
