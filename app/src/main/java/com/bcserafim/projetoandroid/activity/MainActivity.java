@@ -1,7 +1,8 @@
-package com.bcserafim.projetoandroid;
+package com.bcserafim.projetoandroid.activity;
 
 import android.os.Bundle;
 
+import com.bcserafim.projetoandroid.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
