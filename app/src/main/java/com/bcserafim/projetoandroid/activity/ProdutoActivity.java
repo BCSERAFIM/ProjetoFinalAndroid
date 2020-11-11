@@ -15,13 +15,21 @@ import android.widget.Toast;
 
 import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.adapter.AdapterProduto;
+import com.bcserafim.projetoandroid.entity.Produto;
 import com.bcserafim.projetoandroid.helper.RecyclerItemClickListener;
+import com.bcserafim.projetoandroid.service.ProdutoService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Produto extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class ProdutoActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewProduto;
     private List<Produto> listaProdutos = new ArrayList<>();
@@ -44,12 +52,12 @@ public class Produto extends AppCompatActivity {
             }
         });
 
-        // Listagem de filmes
+        // Listagem de Produtos
         this.obterProdutos();
 
 
         //Configurar Adapter
-        AdapterProduto adapterProduto = new AdapterProduto();
+        AdapterProduto adapterProduto = new AdapterProduto(listaProdutos);
 
 
         // Configuração Recycleview
@@ -98,16 +106,32 @@ public class Produto extends AppCompatActivity {
 
         );
 
-
-
-
-
-
-
     }
 
         public void obterProdutos(){
+            Retrofit retrofit = new  Retrofit.Builder()
+                    .baseUrl("http://localhost:8080/WebServiceAndroid/webresources/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
+            ProdutoService service = retrofit.create(ProdutoService.class);
+            Call<List<Produto>> call = service.carregarProdutos();
+
+            call.enqueue(new Callback<List<Produto>>() {
+                @Override
+                public void onResponse(Call<List<Produto>> call, Response<List<Produto>> response) {
+                    if(response.isSuccessful()){
+                        List<Produto> lista = response.body();
+                    }else{
+                        System.out.println(response.errorBody());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Produto>> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
 
 
         }

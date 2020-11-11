@@ -9,9 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bcserafim.projetoandroid.R;
+import com.bcserafim.projetoandroid.entity.Produto;
+
+import java.util.List;
 
 public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHolder> {
 
+    private List<Produto> listaProdutos;
+
+    public AdapterProduto(List<Produto> lista){
+        this.listaProdutos = lista;
+    }
 
     @NonNull
     @Override
@@ -27,15 +35,15 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
-        holder.id.setText("ID");
-        holder.descricao.setText("Descrição");
+        Produto produto = listaProdutos.get(position);
+        holder.id.setText(produto.getId());
+        holder.descricao.setText(produto.getDescricao());
 
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return listaProdutos.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
