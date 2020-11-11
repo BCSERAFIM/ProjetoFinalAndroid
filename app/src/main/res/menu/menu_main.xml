@@ -9,22 +9,22 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_cliente"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         android:title="Cliente"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_pedido"
-        android:orderInCategory="100"
+        android:orderInCategory="500"
         android:title="Pedido"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_usuario"
-        android:orderInCategory="100"
+        android:orderInCategory="300"
         android:title="Usuario"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_consulta"
-        android:orderInCategory="100"
+        android:orderInCategory="400"
         android:title="Consulta"
         app:showAsAction="never" />
 </menu>
