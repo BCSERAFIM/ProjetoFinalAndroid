@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,20 +54,8 @@ public class ProdutoActivity extends AppCompatActivity {
         });
 
         // Listagem de Produtos
-        this.obterProdutos();
+       // this.obterProdutos();
 
-
-        //Configurar Adapter
-        AdapterProduto adapterProduto = new AdapterProduto(listaProdutos);
-
-
-        // Configuração Recycleview
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerViewProduto.setLayoutManager(layoutManager);
-        recyclerViewProduto.setHasFixedSize(true); // O Recycle view terá um tamanho fixo
-        recyclerViewProduto.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));//vai criar uma linha vertical entre os conjuntos os  itens
-        recyclerViewProduto.setAdapter( adapterProduto ); // Adapter vai receber os dados formatar o layout e utilizar no RecycleView
 
         // Evento de Click
 
@@ -108,7 +97,7 @@ public class ProdutoActivity extends AppCompatActivity {
 
     }
 
-        public void obterProdutos(){
+        public void obterProdutos(Context applicationContext){
             Retrofit retrofit = new  Retrofit.Builder()
                     .baseUrl("http://192.168.15.11:8080/WebServiceAndroid/webresources/")
                     .addConverterFactory(GsonConverterFactory.create())
@@ -138,6 +127,23 @@ public class ProdutoActivity extends AppCompatActivity {
             });
 
 
+            //Configurar Adapter
+            AdapterProduto adapterProduto = new AdapterProduto(listaProdutos);
+
+
+            // Configuração Recycleview
+
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerViewProduto.setLayoutManager(layoutManager);
+            recyclerViewProduto.setHasFixedSize(true); // O Recycle view terá um tamanho fixo
+            recyclerViewProduto.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));//vai criar uma linha vertical entre os conjuntos os  itens
+            recyclerViewProduto.setAdapter( adapterProduto ); // Adapter vai receber os dados formatar o layout e utilizar no RecycleView
+
         }
 
+    @Override
+    protected void onStart() {
+        obterProdutos(getApplicationContext());
+        super.onStart();
+    }
 }
