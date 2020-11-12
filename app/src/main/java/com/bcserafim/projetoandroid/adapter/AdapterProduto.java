@@ -18,6 +18,7 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
     private List<Produto> listaProdutos;
 
     public AdapterProduto(List<Produto> lista){
+
         this.listaProdutos = lista;
     }
 

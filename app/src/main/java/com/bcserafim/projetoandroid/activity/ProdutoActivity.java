@@ -110,7 +110,7 @@ public class ProdutoActivity extends AppCompatActivity {
 
         public void obterProdutos(){
             Retrofit retrofit = new  Retrofit.Builder()
-                    .baseUrl("http://localhost:8080/WebServiceAndroid/webresources/")
+                    .baseUrl("http://192.168.15.11:8080/WebServiceAndroid/webresources/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
@@ -121,7 +121,11 @@ public class ProdutoActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<List<Produto>> call, Response<List<Produto>> response) {
                     if(response.isSuccessful()){
-                        List<Produto> lista = response.body();
+                        Produto produto = new Produto();
+                        listaProdutos = response.body();
+                        produto.getId();
+                        produto.getDescricao();
+                        listaProdutos.add(produto);
                     }else{
                         System.out.println(response.errorBody());
                     }
