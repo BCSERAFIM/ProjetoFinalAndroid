@@ -17,8 +17,11 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
 
     private List<Produto> listaProdutos;
 
-    public AdapterProduto(List<Produto> lista){
+    public AdapterProduto() {
 
+    }
+
+    public void update(List<Produto> lista) {
         this.listaProdutos = lista;
     }
 
@@ -26,35 +29,36 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-       View itemLista = LayoutInflater.from(parent.getContext())
-               .inflate(R.layout.adapter_produto,parent,false);
+        View itemLista = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.adapter_produto, parent, false);
 
 
-
+        
         return new MyViewHolder(itemLista);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Produto produto = listaProdutos.get(position);
-        holder.id.setText(produto.getId());
+        holder.id.setText(String.format("%d",produto.getId()));
         holder.descricao.setText(produto.getDescricao());
 
     }
 
     @Override
     public int getItemCount() {
-
+        if (this.listaProdutos == null)
+            return 0;
         return this.listaProdutos.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
-            TextView id, descricao;
+        TextView id, descricao;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            id = itemView.findViewById(R.id.textViewIdProduto);
+            id = (TextView)itemView.findViewById(R.id.textViewIdProduto);
             descricao = itemView.findViewById(R.id.textViewDescricaoProduto);
         }
     }

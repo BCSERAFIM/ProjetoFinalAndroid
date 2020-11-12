@@ -14,7 +14,7 @@ public interface ProdutoService {
 
 
 
-    @GET("produto")
+    @GET("/WebServiceAndroid/webresources/produto")
     Call<List<Produto>> carregarProdutos();
 
 }
