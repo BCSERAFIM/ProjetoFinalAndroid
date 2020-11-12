@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.CadastroProduto"></activity>
+        <activity android:name=".activity.CadastroProduto"/>
         <activity android:name=".activity.ProdutoActivity" />
+        <activity android:name=".activity.CadastroUsuario"/>
+        <activity android:name=".activity.UsuarioActivity" />
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"

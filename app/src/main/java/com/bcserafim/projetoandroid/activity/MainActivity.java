@@ -35,7 +35,11 @@ public class MainActivity extends AppCompatActivity {
            case R.id.action_produto:
                startActivity(new Intent(this, ProdutoActivity.class ));
                return true;
+           case R.id.action_usuario:
+               startActivity(new Intent(this, UsuarioActivity.class ));
+               return true;
                default:;
+
        }
 
         return super.onOptionsItemSelected(item);

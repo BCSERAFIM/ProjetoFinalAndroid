@@ -112,7 +112,7 @@ public class ProdutoActivity extends AppCompatActivity {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.15.11:8080")
+                .baseUrl("http://10.10.0.38:8080/WebServiceAndroid/webresources/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -129,7 +129,7 @@ public class ProdutoActivity extends AppCompatActivity {
                     adapterProduto.update(listaProdutos);
                     adapterProduto.notifyDataSetChanged();
 
-                    System.out.println(listaProdutos);
+
                 } else {
                     System.out.println(response.errorBody());
                 }

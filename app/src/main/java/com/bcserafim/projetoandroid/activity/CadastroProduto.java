@@ -20,19 +20,19 @@ public class CadastroProduto extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_cadastrar_produto,menu);
+    //    getMenuInflater().inflate(R.menu.menu_cadastrar_produto,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch((item.getItemId())){
-            case R.id.cadastrarProduto:
+      /*      case R.id.cadastrarProduto:
                 //Executa ação para o item salvar
                 Toast.makeText(CadastroProduto.this,
                         "Botao salvar pressionado",
                         Toast.LENGTH_SHORT).show();
-                break;
+                break;*/
         }
         return super.onOptionsItemSelected(item);
     }
