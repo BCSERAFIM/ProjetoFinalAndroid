@@ -66,12 +66,13 @@ public class ProdutoActivity extends AppCompatActivity {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                Log.i("Clique", "onItemClick");
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        "Item pressionado: ",
-                                        Toast.LENGTH_SHORT
-                                ).show();
+                                //Recuperar tarefa oara edicao
+                                Produto produtoSelecionado = listaProdutos.get(position);
+
+                                // Enviar produto para tela Cadastro Produto
+                                Intent intent = new Intent(ProdutoActivity.this, CadastroProduto.class);
+                                intent.putExtra("produtoSelecionado",produtoSelecionado);
+                                startActivity(intent);
                             }
 
                             @Override
@@ -112,13 +113,13 @@ public class ProdutoActivity extends AppCompatActivity {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.10.0.38:8080/WebServiceAndroid/webresources/")
+                .baseUrl("http://192.168.15.11:8080/WebServiceAndroid/webresources/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
 
         ProdutoService service = retrofit.create(ProdutoService.class);
-        Call<List<Produto>> call = service.carregarProdutos();
+        Call<List<Produto>> call = service.carregarTodosProdutos();
 
         call.enqueue(new Callback<List<Produto>>() {
             @Override

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                startActivity(new Intent(this, ProdutoActivity.class ));
                return true;
            case R.id.action_usuario:
-               startActivity(new Intent(this, UsuarioActivity.class ));
+              // startActivity(new Intent(this, UsuarioActivity.class ));
                return true;
                default:;
 

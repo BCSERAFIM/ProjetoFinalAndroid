@@ -1,6 +1,8 @@
 package com.bcserafim.projetoandroid.entity;
 
-public class Produto {
+import java.io.Serializable;
+
+public class Produto implements Serializable {
 
     private Integer id;
     private String descricao;
