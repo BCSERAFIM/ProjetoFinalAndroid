@@ -16,6 +16,7 @@ import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.entity.Produto;
 import com.bcserafim.projetoandroid.entity.Usuario;
 import com.bcserafim.projetoandroid.service.ProdutoService;
+import com.bcserafim.projetoandroid.service.UsuarioService;
 
 import java.util.List;
 
@@ -40,20 +41,29 @@ public class CadastroUsuario extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                if( login.getText().toString().trim().equals("")){
+                    login.setError("Campo obrigatório");
+
+                }
+                if( senha.getText().toString().trim().equals("")){
+                    senha.setError("Campo obrigatório");
+
+                }
+
                 String loginUsuario = login.getText().toString();
                 String senhaUsuario = senha.getText().toString().trim();
                 Usuario usuario = new Usuario();
-                usuario.setLogin(Integer.valueOf(loginUsuario));
-                usuario.setSenha(senhaUsuario);
 
-                if (usuario != null) {
+                if (!loginUsuario.isEmpty() && !senhaUsuario.isEmpty()) {
+                    usuario.setLogin(Integer.valueOf(loginUsuario));
+                    usuario.setSenha(senhaUsuario);
                     Retrofit retrofit = new Retrofit.Builder()
                             .baseUrl("http://10.10.0.38:8080/WebServiceAndroid/webresources/")
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
 
 
-                    ProdutoService service = retrofit.create(ProdutoService.class);
+                    UsuarioService service = retrofit.create(UsuarioService.class);
                     Call<Usuario> call = service.cadastrarUsuario(usuario);
                     call.enqueue(new Callback<Usuario>() {
                         @Override

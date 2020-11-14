@@ -53,7 +53,7 @@ public class UsuarioActivity extends AppCompatActivity {
         });
 
         // Listagem de Usuarios
-        // this.obterUsuarios();
+         this.obterUsuarios();
 
 
         // Evento de Click

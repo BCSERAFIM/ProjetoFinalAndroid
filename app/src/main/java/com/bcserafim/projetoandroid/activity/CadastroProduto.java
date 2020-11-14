@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.entity.Produto;
-import com.bcserafim.projetoandroid.helper.ProdutoCallback;
-import com.bcserafim.projetoandroid.helper.ProdutoFacade;
+/*import com.bcserafim.projetoandroid.helper.ProdutoCallback;
+import com.bcserafim.projetoandroid.helper.ProdutoFacade;*/
 import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroProduto extends AppCompatActivity {
@@ -38,16 +38,16 @@ public class CadastroProduto extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_cadastrar_produto,menu);
+    //    getMenuInflater().inflate(R.menu.menu_cadastrar_produto,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch((item.getItemId())){
-          case R.id.cadastrarProduto:
+        /*   case R.id.cadastrarProduto:
                 //Executa ação para o item salvar
-              final String descricaoProduto = editCadastroProduto.getText().toString();
+             final String descricaoProduto = editCadastroProduto.getText().toString();
               if(!descricaoProduto.isEmpty()){
                   ProdutoFacade.cadastrar(produtoAtual, new ProdutoCallback() {
                       @Override
@@ -72,7 +72,7 @@ public class CadastroProduto extends AppCompatActivity {
 
               }
               break;
-
+      */
         }
         return super.onOptionsItemSelected(item);
     }
