@@ -1,11 +1,13 @@
 package com.bcserafim.projetoandroid.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +19,8 @@ import android.widget.Toast;
 import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.adapter.AdapterProduto;
 import com.bcserafim.projetoandroid.entity.Produto;
+import com.bcserafim.projetoandroid.helper.ProdutoCallback;
+import com.bcserafim.projetoandroid.helper.ProdutoFacade;
 import com.bcserafim.projetoandroid.helper.RecyclerItemClickListener;
 import com.bcserafim.projetoandroid.service.ProdutoService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,6 +40,8 @@ public class ProdutoActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewProduto;
     private List<Produto> listaProdutos = new ArrayList<>();
+    private Produto produtoSelecionado;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,14 +83,45 @@ public class ProdutoActivity extends AppCompatActivity {
 
                             @Override
                             public void onLongItemClick(View view, int position) {
-                                Log.i("Clique", "onLongItemClick");
+                                //Recuperar tarefa para deletar
+                                produtoSelecionado = listaProdutos.get(position);
 
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        "Click Longo",
-                                        Toast.LENGTH_SHORT
-                                ).show();
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(ProdutoActivity.this);
 
+                                // Configurar titulo e mensagem
+                                dialog.setTitle("Confirmar Exclusão");
+                                dialog.setMessage("Deseja excluir o produto: "+produtoSelecionado.getDescricao()+" ?");
+
+                                dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        ProdutoFacade.remover(produtoSelecionado.getId(), new ProdutoCallback() {
+                                            @Override
+                                            public void onSuccess(Produto produto) {
+                                                obterProdutos();
+                                                Toast.makeText(getApplicationContext(),
+                                                        "Sucesso ao excluir produto!",
+                                                        Toast.LENGTH_LONG).show();
+                                            }
+
+                                            @Override
+                                            public void onFailure(Throwable t) {
+                                                Toast.makeText(getApplicationContext(),
+                                                        "Erro ao excluir produto: " +
+                                                        t.getMessage(),
+                                                        Toast.LENGTH_LONG).show();
+
+                                            }
+                                        });
+                                    }
+                                });
+
+                                dialog.setNegativeButton("Não",null);
+
+                                //Exibir dialog
+                                dialog.create();
+                                dialog.show();
                             }
 
                             @Override
