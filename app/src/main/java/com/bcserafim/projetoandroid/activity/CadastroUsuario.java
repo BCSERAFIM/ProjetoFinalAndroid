@@ -13,9 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bcserafim.projetoandroid.R;
-import com.bcserafim.projetoandroid.entity.Produto;
 import com.bcserafim.projetoandroid.entity.Usuario;
-import com.bcserafim.projetoandroid.service.ProdutoService;
 import com.bcserafim.projetoandroid.service.UsuarioService;
 
 import java.util.List;
@@ -25,6 +23,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.bcserafim.projetoandroid.activity.MainActivity.BASE_URL;
 
 public class CadastroUsuario extends AppCompatActivity {
 
@@ -58,9 +58,10 @@ public class CadastroUsuario extends AppCompatActivity {
                     usuario.setLogin(Integer.valueOf(loginUsuario));
                     usuario.setSenha(senhaUsuario);
                     Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl("http://10.10.0.38:8080/WebServiceAndroid/webresources/")
+                            .baseUrl(BASE_URL)
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
+
 
 
                     UsuarioService service = retrofit.create(UsuarioService.class);
