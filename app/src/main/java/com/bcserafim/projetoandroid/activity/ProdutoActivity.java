@@ -55,8 +55,6 @@ public class ProdutoActivity extends AppCompatActivity {
             }
         });
 
-        // Listagem de Produtos
-        // this.obterProdutos();
 
 
         // Evento de Click

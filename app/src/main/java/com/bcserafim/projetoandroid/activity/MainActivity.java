@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String BASE_URL = "http://10.10.0.38:8080/WebServiceAndroid/webresources/";
+    public static final String BASE_URL = "http://192.168.15.11:8080/WebServiceAndroid/webresources/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

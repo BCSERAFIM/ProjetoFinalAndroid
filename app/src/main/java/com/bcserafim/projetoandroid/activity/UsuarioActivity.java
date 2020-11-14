@@ -111,7 +111,7 @@ public class UsuarioActivity extends AppCompatActivity {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.10.0.38:8080/WebServiceAndroid/webresources/")
+                .baseUrl("http://192.168.15.11:8080/WebServiceAndroid/webresources/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
