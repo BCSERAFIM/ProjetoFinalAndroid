@@ -5,7 +5,7 @@ public class Cliente {
     private Integer id;
     private String cpf;
     private String nome;
-    private String sobrenome;
+    private String sobreNome;
 
     public Integer getId() {
         return id;
@@ -31,11 +31,11 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public String getSobrenome() {
-        return sobrenome;
+    public String getSobreNome() {
+        return sobreNome;
     }
 
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
+    public void setSobreNome(String sobreNome) {
+        this.sobreNome = sobreNome;
     }
 }
