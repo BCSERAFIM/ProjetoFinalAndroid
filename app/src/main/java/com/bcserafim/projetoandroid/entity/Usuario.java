@@ -1,6 +1,8 @@
 package com.bcserafim.projetoandroid.entity;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable {
 
     private Integer login;
     private String senha;

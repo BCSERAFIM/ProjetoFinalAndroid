@@ -72,8 +72,8 @@ public class ProdutoActivity extends AppCompatActivity {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                //Recuperar tarefa oara edicao
-                                Produto produtoSelecionado = listaProdutos.get(position);
+                                //Recuperar produto area edicao
+                                produtoSelecionado = listaProdutos.get(position);
 
                                 // Enviar produto para tela Cadastro Produto
                                 Intent intent = new Intent(ProdutoActivity.this, CadastroProduto.class);
