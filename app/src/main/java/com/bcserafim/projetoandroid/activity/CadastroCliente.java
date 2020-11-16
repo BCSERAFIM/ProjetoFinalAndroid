@@ -113,7 +113,7 @@ public class CadastroCliente extends AppCompatActivity {
                                         Toast.LENGTH_LONG).show();
                             }
                         });
-                        
+
                     }
 
                 }

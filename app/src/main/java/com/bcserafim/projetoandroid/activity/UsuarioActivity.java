@@ -29,6 +29,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.bcserafim.projetoandroid.activity.MainActivity.BASE_URL;
+
 public class UsuarioActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewUsuario;
@@ -111,7 +113,7 @@ public class UsuarioActivity extends AppCompatActivity {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.15.11:8080/WebServiceAndroid/webresources/")
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

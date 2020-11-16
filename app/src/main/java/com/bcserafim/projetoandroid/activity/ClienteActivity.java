@@ -1,10 +1,12 @@
 package com.bcserafim.projetoandroid.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.adapter.AdapterCliente;
 import com.bcserafim.projetoandroid.entity.Cliente;
+import com.bcserafim.projetoandroid.helper.ClienteCallback;
 import com.bcserafim.projetoandroid.helper.ClienteFacade;
 import com.bcserafim.projetoandroid.helper.RecyclerItemClickListener;
 import com.bcserafim.projetoandroid.service.ClienteService;
@@ -78,9 +81,47 @@ public class ClienteActivity extends AppCompatActivity {
 
                             @Override
                             public void onLongItemClick(View view, int position) {
-                                Toast.makeText(ClienteActivity.this,
-                                        "Click longo",
-                                        Toast.LENGTH_LONG).show();
+                                //Recuperar cliente para deletar
+                               clienteSelecionado = listaClientes.get(position);
+
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(ClienteActivity.this);
+
+
+                                // Configurar titulo e mensagem
+                                dialog.setTitle("Confirmar Exclusão");
+                                dialog.setMessage("Deseja excluir o cliente "+clienteSelecionado.getNome()+" ?");
+
+                                dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ClienteFacade.remover(clienteSelecionado.getId(), new ClienteCallback() {
+                                            @Override
+                                            public void onSuccess(Cliente cliente) {
+                                                obterClientes();
+                                                Toast.makeText(getApplicationContext(),
+                                                        "Sucesso ao excluir cliente!",
+                                                        Toast.LENGTH_LONG).show();
+                                            }
+
+                                            @Override
+                                            public void onFailure(Throwable t) {
+                                                Toast.makeText(getApplicationContext(),
+                                                        "Erro ao excluir cliente: " +
+                                                                t.getMessage(),
+                                                        Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+
+                                    }
+                                });
+
+                                dialog.setNegativeButton("Não",null);
+
+
+                                //Exibir dialog
+                                dialog.create();
+                                dialog.show();
+
                             }
 
                             @Override
