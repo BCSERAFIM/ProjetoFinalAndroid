@@ -1,4 +1,4 @@
-package com.bcserafim.projetoandroid.helper;
+package com.bcserafim.projetoandroid.helper.callback;
 
 import com.bcserafim.projetoandroid.entity.Cliente;
 import com.bcserafim.projetoandroid.entity.Usuario;

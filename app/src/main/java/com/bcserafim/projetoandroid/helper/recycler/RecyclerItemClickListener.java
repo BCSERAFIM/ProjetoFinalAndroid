@@ -1,4 +1,4 @@
-package com.bcserafim.projetoandroid.helper;
+package com.bcserafim.projetoandroid.helper.recycler;
 
 
 import android.content.Context;

@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String BASE_URL = "http://192.168.15.11:8080/WebServiceAndroid/webresources/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,26 +31,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-       switch (item.getItemId()){
-           case R.id.action_produto:
-               startActivity(new Intent(this, ProdutoActivity.class ));
-               return true;
-           case R.id.action_usuario:
-               startActivity(new Intent(this, UsuarioActivity.class ));
-               return true;
-           case R.id.action_cliente:
-               startActivity(new Intent(this, ClienteActivity.class ));
-               return true;
-
-               default:;
-
-       }
+        switch (item.getItemId()) {
+            case R.id.action_produto:
+                startActivity(new Intent(this, ProdutoActivity.class));
+                return true;
+            case R.id.action_usuario:
+                startActivity(new Intent(this, UsuarioActivity.class));
+                return true;
+            case R.id.action_cliente:
+                startActivity(new Intent(this, ClienteActivity.class));
+                return true;
+            case R.id.action_pedido:
+                startActivity(new Intent(this, PedidoActivity.class));
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
 
-            }
-
-
+    }
 
 
 }

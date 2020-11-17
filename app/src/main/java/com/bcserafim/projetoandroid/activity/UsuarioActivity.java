@@ -3,7 +3,6 @@ package com.bcserafim.projetoandroid.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -17,11 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.adapter.AdapterUsuario;
-import com.bcserafim.projetoandroid.entity.Produto;
 import com.bcserafim.projetoandroid.entity.Usuario;
-import com.bcserafim.projetoandroid.helper.RecyclerItemClickListener;
-import com.bcserafim.projetoandroid.helper.UsuarioCallback;
-import com.bcserafim.projetoandroid.helper.UsuarioFacade;
+import com.bcserafim.projetoandroid.helper.recycler.RecyclerItemClickListener;
+import com.bcserafim.projetoandroid.helper.callback.UsuarioCallback;
+import com.bcserafim.projetoandroid.helper.facade.UsuarioFacade;
 import com.bcserafim.projetoandroid.service.*;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -54,7 +52,7 @@ public class UsuarioActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), CadastroUsuario.class);
+                Intent intent = new Intent(getApplicationContext(), CadastroUsuarioActivity.class);
                 startActivity(intent);
 
             }
@@ -77,7 +75,7 @@ public class UsuarioActivity extends AppCompatActivity {
                                 usuarioSelecionado = listaUsuarios.get(position);
 
                                 // Enviar usuario para tela Cadastro Usuario
-                                Intent intent = new Intent(UsuarioActivity.this, CadastroUsuario.class);
+                                Intent intent = new Intent(UsuarioActivity.this, CadastroUsuarioActivity.class);
                                 intent.putExtra("usuarioSelecionado",usuarioSelecionado);
                                 startActivity(intent);
                             }

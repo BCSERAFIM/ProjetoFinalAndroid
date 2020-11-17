@@ -6,6 +6,16 @@ public class Produto implements Serializable {
 
     private Integer id;
     private String descricao;
+    private Integer Qtd;
+
+    public Integer getQtd() {
+        return Qtd;
+    }
+
+    public void setQtd(Integer qtd) {
+        Qtd = qtd;
+    }
+
 
     public Integer getId() {
         return id;

@@ -17,9 +17,9 @@ import android.widget.Toast;
 import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.adapter.AdapterCliente;
 import com.bcserafim.projetoandroid.entity.Cliente;
-import com.bcserafim.projetoandroid.helper.ClienteCallback;
-import com.bcserafim.projetoandroid.helper.ClienteFacade;
-import com.bcserafim.projetoandroid.helper.RecyclerItemClickListener;
+import com.bcserafim.projetoandroid.helper.callback.ClienteCallback;
+import com.bcserafim.projetoandroid.helper.facade.ClienteFacade;
+import com.bcserafim.projetoandroid.helper.recycler.RecyclerItemClickListener;
 import com.bcserafim.projetoandroid.service.ClienteService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -52,7 +52,7 @@ public class ClienteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), CadastroCliente.class);
+                Intent intent = new Intent(getApplicationContext(), CadastroClienteActivity.class);
                 startActivity(intent);
 
             }
@@ -72,7 +72,7 @@ public class ClienteActivity extends AppCompatActivity {
                                 clienteSelecionado = listaClientes.get(position);
 
                                 // Enviar cliente para tela Cadastro Cliente
-                                Intent intent = new Intent(ClienteActivity.this, CadastroCliente.class);
+                                Intent intent = new Intent(ClienteActivity.this, CadastroClienteActivity.class);
                                 intent.putExtra("clienteSelecionado", clienteSelecionado);
                                 startActivity(intent);
 

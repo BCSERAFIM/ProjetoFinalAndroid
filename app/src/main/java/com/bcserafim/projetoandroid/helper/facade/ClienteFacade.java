@@ -1,6 +1,8 @@
-package com.bcserafim.projetoandroid.helper;
+package com.bcserafim.projetoandroid.helper.facade;
 
+import com.bcserafim.projetoandroid.BuildConfig;
 import com.bcserafim.projetoandroid.entity.Cliente;
+import com.bcserafim.projetoandroid.helper.callback.ClienteCallback;
 import com.bcserafim.projetoandroid.service.ClienteService;
 
 
@@ -10,14 +12,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.bcserafim.projetoandroid.activity.MainActivity.BASE_URL;
 
 public class ClienteFacade {
 
     public static void cadastrar (Cliente cliente, final ClienteCallback callback){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         ClienteService service = retrofit.create(ClienteService.class);
@@ -43,7 +44,7 @@ public class ClienteFacade {
     public static void alterar (Cliente cliente, final ClienteCallback callback){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         ClienteService service = retrofit.create(ClienteService.class);
@@ -69,7 +70,7 @@ public class ClienteFacade {
     public static void remover (Integer id, final ClienteCallback callback){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         ClienteService service = retrofit.create(ClienteService.class);

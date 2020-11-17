@@ -5,18 +5,21 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.CadastroCliente"></activity>
+        <activity android:name=".activity.CadastroClienteActivity"></activity>
         <activity android:name=".activity.ClienteActivity"
             android:screenOrientation="sensor"/>
-        <activity android:name=".activity.CadastroProduto" />
+        <activity android:name=".activity.CadastroPedidoActivity"></activity>
+        <activity android:name=".activity.PedidoActivity" />
+        <activity android:name=".activity.CadastroProdutoActivity" />
         <activity android:name=".activity.ProdutoActivity" />
-        <activity android:name=".activity.CadastroUsuario" />
+        <activity android:name=".activity.CadastroUsuarioActivity" />
         <activity android:name=".activity.UsuarioActivity" />
         <activity
             android:name=".activity.MainActivity"

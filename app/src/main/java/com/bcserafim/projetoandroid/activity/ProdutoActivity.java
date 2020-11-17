@@ -17,9 +17,9 @@ import android.widget.Toast;
 import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.adapter.AdapterProduto;
 import com.bcserafim.projetoandroid.entity.Produto;
-import com.bcserafim.projetoandroid.helper.ProdutoCallback;
-import com.bcserafim.projetoandroid.helper.ProdutoFacade;
-import com.bcserafim.projetoandroid.helper.RecyclerItemClickListener;
+import com.bcserafim.projetoandroid.helper.callback.ProdutoCallback;
+import com.bcserafim.projetoandroid.helper.facade.ProdutoFacade;
+import com.bcserafim.projetoandroid.helper.recycler.RecyclerItemClickListener;
 import com.bcserafim.projetoandroid.service.ProdutoService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -53,7 +53,7 @@ public class ProdutoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getApplicationContext(), CadastroProduto.class);
+                Intent intent = new Intent(getApplicationContext(), CadastroProdutoActivity.class);
                 startActivity(intent);
 
             }
@@ -74,7 +74,7 @@ public class ProdutoActivity extends AppCompatActivity {
                                 produtoSelecionado = listaProdutos.get(position);
 
                                 // Enviar produto para tela Cadastro Produto
-                                Intent intent = new Intent(ProdutoActivity.this, CadastroProduto.class);
+                                Intent intent = new Intent(ProdutoActivity.this, CadastroProdutoActivity.class);
                                 intent.putExtra("produtoSelecionado",produtoSelecionado);
                                 startActivity(intent);
                             }

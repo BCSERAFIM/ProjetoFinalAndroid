@@ -1,6 +1,8 @@
-package com.bcserafim.projetoandroid.helper;
+package com.bcserafim.projetoandroid.helper.facade;
 
+import com.bcserafim.projetoandroid.BuildConfig;
 import com.bcserafim.projetoandroid.entity.Usuario;
+import com.bcserafim.projetoandroid.helper.callback.UsuarioCallback;
 import com.bcserafim.projetoandroid.service.UsuarioService;
 
 import retrofit2.Call;
@@ -9,15 +11,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.bcserafim.projetoandroid.activity.MainActivity.BASE_URL;
 
 public class UsuarioFacade {
 
 
-    public static void cadastrar (Usuario usuario, final UsuarioCallback callback){
+    public static void cadastrar(Usuario usuario, final UsuarioCallback callback) {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         UsuarioService service = retrofit.create(UsuarioService.class);
@@ -25,9 +26,9 @@ public class UsuarioFacade {
         call.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     callback.onSuccess(response.body());
-                }else{
+                } else {
                     callback.onFailure(new Exception(response.errorBody().toString()));
                 }
             }
@@ -41,10 +42,10 @@ public class UsuarioFacade {
 
     }
 
-    public static void alterar (Usuario usuario, final UsuarioCallback callback){
+    public static void alterar(Usuario usuario, final UsuarioCallback callback) {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         UsuarioService service = retrofit.create(UsuarioService.class);
@@ -52,9 +53,9 @@ public class UsuarioFacade {
         call.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     callback.onSuccess(response.body());
-                }else{
+                } else {
                     callback.onFailure(new Exception(response.errorBody().toString()));
                 }
             }
@@ -67,10 +68,10 @@ public class UsuarioFacade {
 
     }
 
-    public static void remover (Integer login, final UsuarioCallback callback){
+    public static void remover(Integer login, final UsuarioCallback callback) {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         UsuarioService service = retrofit.create(UsuarioService.class);
@@ -78,9 +79,9 @@ public class UsuarioFacade {
         call.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     callback.onSuccess(response.body());
-                }else{
+                } else {
                     callback.onFailure(new Exception(response.errorBody().toString()));
                 }
             }

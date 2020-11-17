@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.stepstone.stepper.StepperLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/stepperLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ms_activeStepColor="@color/verdeExito"
+        app:ms_backButtonColor="@color/azulOscuro"
+        app:ms_backButtonText="Atras"
+        app:ms_completeButtonColor="@color/verdeExito"
+        app:ms_completeButtonText="Enviar"
+        app:ms_nextButtonColor="@color/azulOscuro"
+        app:ms_nextButtonText="Seguinte"
+        app:ms_stepperFeedbackType="tabs|disabled_bottom_navigation"
+        app:ms_stepperType="tabs" />
+
+</LinearLayout>

@@ -1,6 +1,8 @@
-package com.bcserafim.projetoandroid.helper;
+package com.bcserafim.projetoandroid.helper.facade;
 
+import com.bcserafim.projetoandroid.BuildConfig;
 import com.bcserafim.projetoandroid.entity.Produto;
+import com.bcserafim.projetoandroid.helper.callback.ProdutoCallback;
 import com.bcserafim.projetoandroid.service.ProdutoService;
 
 import retrofit2.Call;
@@ -9,14 +11,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.bcserafim.projetoandroid.activity.MainActivity.BASE_URL;
 
 public class ProdutoFacade {
 
     public static void cadastrar (Produto produto, final ProdutoCallback callback){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         ProdutoService service = retrofit.create(ProdutoService.class);
@@ -43,7 +44,7 @@ public class ProdutoFacade {
     public static void alterar (Produto produto, final ProdutoCallback callback){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         ProdutoService service = retrofit.create(ProdutoService.class);
@@ -69,7 +70,7 @@ public class ProdutoFacade {
     public static void remover (Integer id, final ProdutoCallback callback){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         ProdutoService service = retrofit.create(ProdutoService.class);

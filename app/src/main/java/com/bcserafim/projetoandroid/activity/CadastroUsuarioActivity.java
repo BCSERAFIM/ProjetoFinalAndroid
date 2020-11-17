@@ -11,13 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bcserafim.projetoandroid.R;
-import com.bcserafim.projetoandroid.entity.Produto;
 import com.bcserafim.projetoandroid.entity.Usuario;
-import com.bcserafim.projetoandroid.helper.UsuarioCallback;
-import com.bcserafim.projetoandroid.helper.UsuarioFacade;
+import com.bcserafim.projetoandroid.helper.callback.UsuarioCallback;
+import com.bcserafim.projetoandroid.helper.facade.UsuarioFacade;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class CadastroUsuario extends AppCompatActivity {
+public class CadastroUsuarioActivity extends AppCompatActivity {
     private TextInputEditText login, senha;
     private Usuario usuarioAtual;
 
@@ -78,7 +77,7 @@ public class CadastroUsuario extends AppCompatActivity {
                         UsuarioFacade.alterar(usuario, new UsuarioCallback() {
                             @Override
                             public void onSuccess(Usuario usuario) {
-                                Toast.makeText(CadastroUsuario.this,
+                                Toast.makeText(CadastroUsuarioActivity.this,
                                         "Sucesso ao alterar usuario:",
                                         Toast.LENGTH_LONG).show();
                                 finish();
@@ -87,7 +86,7 @@ public class CadastroUsuario extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Throwable t) {
-                                Toast.makeText(CadastroUsuario.this,
+                                Toast.makeText(CadastroUsuarioActivity.this,
                                         "Erro ao cadastrar usuario: " +
                                                 t.getMessage(),
                                         Toast.LENGTH_LONG).show();
@@ -103,7 +102,7 @@ public class CadastroUsuario extends AppCompatActivity {
                             UsuarioFacade.cadastrar(usuario, new UsuarioCallback() {
                                 @Override
                                 public void onSuccess(Usuario usuario) {
-                                    Toast.makeText(CadastroUsuario.this,
+                                    Toast.makeText(CadastroUsuarioActivity.this,
                                             "Sucesso ao cadastrar usuario:",
                                             Toast.LENGTH_LONG).show();
                                     finish();
@@ -112,7 +111,7 @@ public class CadastroUsuario extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(Throwable t) {
-                                    Toast.makeText(CadastroUsuario.this,
+                                    Toast.makeText(CadastroUsuarioActivity.this,
                                             "Erro ao cadastrar usuario: " +
                                                     t.getMessage(),
                                             Toast.LENGTH_LONG).show();

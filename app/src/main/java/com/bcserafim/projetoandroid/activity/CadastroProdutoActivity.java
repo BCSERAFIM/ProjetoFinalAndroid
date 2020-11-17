@@ -10,11 +10,11 @@ import android.widget.Toast;
 
 import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.entity.Produto;
-import com.bcserafim.projetoandroid.helper.ProdutoCallback;
-import com.bcserafim.projetoandroid.helper.ProdutoFacade;
+import com.bcserafim.projetoandroid.helper.callback.ProdutoCallback;
+import com.bcserafim.projetoandroid.helper.facade.ProdutoFacade;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class CadastroProduto extends AppCompatActivity {
+public class CadastroProdutoActivity extends AppCompatActivity {
 
     private TextInputEditText editCadastroProduto;
     private Produto produtoAtual;
@@ -64,7 +64,7 @@ public class CadastroProduto extends AppCompatActivity {
 
                             @Override
                             public void onSuccess(Produto produto) {
-                                Toast.makeText(CadastroProduto.this,
+                                Toast.makeText(CadastroProdutoActivity.this,
                                         "Sucesso ao alterar produto: ",
                                         Toast.LENGTH_LONG).show();
                                 finish();
@@ -72,7 +72,7 @@ public class CadastroProduto extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Throwable t) {
-                                Toast.makeText(CadastroProduto.this,
+                                Toast.makeText(CadastroProdutoActivity.this,
                                         "Erro ao alterar produto: " +
                                                 t.getMessage(),
                                         Toast.LENGTH_LONG).show();
@@ -90,7 +90,7 @@ public class CadastroProduto extends AppCompatActivity {
                         ProdutoFacade.cadastrar(produto, new ProdutoCallback() {
                             @Override
                             public void onSuccess(Produto produto) {
-                                Toast.makeText(CadastroProduto.this,
+                                Toast.makeText(CadastroProdutoActivity.this,
                                         "Sucesso ao cadastrar produto: ",
                                         Toast.LENGTH_LONG).show();
                                 finish();
@@ -100,7 +100,7 @@ public class CadastroProduto extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Throwable t) {
-                                Toast.makeText(CadastroProduto.this,
+                                Toast.makeText(CadastroProdutoActivity.this,
                                         "Erro ao cadastrar produto: " +
                                                 t.getMessage(),
                                         Toast.LENGTH_LONG).show();
@@ -109,11 +109,13 @@ public class CadastroProduto extends AppCompatActivity {
 
 
                     } else {
-                        Toast.makeText(CadastroProduto.this,
+                        Toast.makeText(CadastroProdutoActivity.this,
                                 "Preencher todos os campos! ",
                                 Toast.LENGTH_LONG).show();
 
                     }
+
+
                 }
                 break;
 
