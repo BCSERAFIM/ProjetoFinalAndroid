@@ -18,9 +18,8 @@ import com.bcserafim.projetoandroid.helper.UsuarioFacade;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class CadastroUsuario extends AppCompatActivity {
-    private TextInputEditText login,senha;
+    private TextInputEditText login, senha;
     private Usuario usuarioAtual;
-
 
 
     @Override
@@ -29,7 +28,6 @@ public class CadastroUsuario extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_usuario);
         login = findViewById(R.id.editTextLogin);
         senha = findViewById(R.id.editTextSenha);
-
 
 
         usuarioAtual = (Usuario) getIntent().getSerializableExtra("usuarioSelecionado");
@@ -53,49 +51,74 @@ public class CadastroUsuario extends AppCompatActivity {
         final EditText login = findViewById(R.id.editTextLogin);
         final EditText senha = findViewById(R.id.editTextSenha);
 
-        if (login.getText().toString().trim().equals("")) {
-            login.setError("Campo obrigatório");
-
-        }
-        if (senha.getText().toString().trim().equals("")) {
-            senha.setError("Campo obrigatório");
-
-        }
-
 
         switch ((item.getItemId())) {
             case R.id.cadastrarProduto:
-                String loginUsuario = login.getText().toString();
-                String senhaUsuario = senha.getText().toString().trim();
-                Usuario usuario = new Usuario();
+                if (login.getText().toString().trim().equals("") || senha.getText().toString().trim().equals("")) {
+                    if (login.getText().toString().trim().equals("")) {
+                        login.setError("Campo obrigatório");
 
-                if (!loginUsuario.isEmpty() && !senhaUsuario.isEmpty()) {
-                    usuario.setLogin(Integer.valueOf(loginUsuario));
-                    usuario.setSenha(senhaUsuario);
-                    UsuarioFacade.cadastrar(usuario, new UsuarioCallback() {
-                        @Override
-                        public void onSuccess(Usuario usuario) {
-                            Toast.makeText(CadastroUsuario.this,
-                                    "Sucesso ao cadastrar usuario:",
-                                    Toast.LENGTH_LONG).show();
-                            finish();
+                    }
+                    if (senha.getText().toString().trim().equals("")) {
+                        senha.setError("Campo obrigatório");
+
+                    }
+                } else {
+                    String loginUsuario = login.getText().toString();
+                    String senhaUsuario = senha.getText().toString().trim();
+                    Usuario usuario = new Usuario();
+                   /*se o usuario for diferente de null eu edito senão eu cadastro um novo*/
+                    if (usuarioAtual != null) {
+                        usuario.setLogin(Integer.valueOf(loginUsuario));
+                        usuario.setSenha(senhaUsuario);
+                        UsuarioFacade.alterar(usuario, new UsuarioCallback() {
+                            @Override
+                            public void onSuccess(Usuario usuario) {
+                                Toast.makeText(CadastroUsuario.this,
+                                        "Sucesso ao alterar usuario:",
+                                        Toast.LENGTH_LONG).show();
+                                finish();
+
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+                                Toast.makeText(CadastroUsuario.this,
+                                        "Erro ao cadastrar usuario: " +
+                                                t.getMessage(),
+                                        Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+
+                    } else {
+
+                        if (!loginUsuario.isEmpty() && !senhaUsuario.isEmpty()) {
+                            usuario.setLogin(Integer.valueOf(loginUsuario));
+                            usuario.setSenha(senhaUsuario);
+                            UsuarioFacade.cadastrar(usuario, new UsuarioCallback() {
+                                @Override
+                                public void onSuccess(Usuario usuario) {
+                                    Toast.makeText(CadastroUsuario.this,
+                                            "Sucesso ao cadastrar usuario:",
+                                            Toast.LENGTH_LONG).show();
+                                    finish();
+
+                                }
+
+                                @Override
+                                public void onFailure(Throwable t) {
+                                    Toast.makeText(CadastroUsuario.this,
+                                            "Erro ao cadastrar usuario: " +
+                                                    t.getMessage(),
+                                            Toast.LENGTH_LONG).show();
+
+                                }
+                            });
+
 
                         }
-
-                        @Override
-                        public void onFailure(Throwable t) {
-                            Toast.makeText(CadastroUsuario.this,
-                                    "Erro ao cadastrar usuario: " +
-                                            t.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-
-                        }
-                    });
-
-
-                } else /*se ja vier preenchido eu altero*/ {
-
-
+                    }
                 }
 
 

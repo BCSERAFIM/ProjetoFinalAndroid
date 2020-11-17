@@ -22,7 +22,7 @@ public interface UsuarioService {
     @POST("usuario")
     Call<Usuario> cadastrar(@Body Usuario usuario);
 
-    @PUT("login")
+    @PUT("usuario")
     Call<Usuario> alterar(@Body Usuario usuario);
 
     @DELETE("usuario/{login}")
