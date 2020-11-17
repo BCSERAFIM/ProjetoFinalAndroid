@@ -35,6 +35,7 @@ public class CadastroCliente extends AppCompatActivity {
 
         //Configurar cliente na caixa de texto
         if(clienteAtual!=null){
+            editTextCpf.setFocusable(false);
             editTextCpf.setText(clienteAtual.getCpf());
             editTextNome.setText(clienteAtual.getNome());
             ediTextSobrenome.setText(clienteAtual.getSobreNome());

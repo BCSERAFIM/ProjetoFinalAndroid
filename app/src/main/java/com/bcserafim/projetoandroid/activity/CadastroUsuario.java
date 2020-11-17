@@ -34,6 +34,7 @@ public class CadastroUsuario extends AppCompatActivity {
 
         //Configurar produto na caixa de texto
         if (usuarioAtual != null) {
+            login.setFocusable(false);
             login.setText(String.valueOf(usuarioAtual.getLogin()));
             senha.setText(usuarioAtual.getSenha());
         }
@@ -50,6 +51,7 @@ public class CadastroUsuario extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         final EditText login = findViewById(R.id.editTextLogin);
         final EditText senha = findViewById(R.id.editTextSenha);
+
 
 
         switch ((item.getItemId())) {
@@ -69,6 +71,8 @@ public class CadastroUsuario extends AppCompatActivity {
                     Usuario usuario = new Usuario();
                    /*se o usuario for diferente de null eu edito senão eu cadastro um novo*/
                     if (usuarioAtual != null) {
+
+
                         usuario.setLogin(Integer.valueOf(loginUsuario));
                         usuario.setSenha(senhaUsuario);
                         UsuarioFacade.alterar(usuario, new UsuarioCallback() {
