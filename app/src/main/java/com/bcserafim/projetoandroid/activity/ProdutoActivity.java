@@ -32,7 +32,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.bcserafim.projetoandroid.activity.MainActivity.BASE_URL;
+import static com.bcserafim.projetoandroid.BuildConfig.BASE_URL;
 
 public class ProdutoActivity extends AppCompatActivity {
 
