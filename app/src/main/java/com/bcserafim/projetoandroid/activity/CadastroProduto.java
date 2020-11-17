@@ -108,9 +108,12 @@ public class CadastroProduto extends AppCompatActivity {
                         });
 
 
+                    } else {
+                        Toast.makeText(CadastroProduto.this,
+                                "Preencher todos os campos! ",
+                                Toast.LENGTH_LONG).show();
+
                     }
-
-
                 }
                 break;
 

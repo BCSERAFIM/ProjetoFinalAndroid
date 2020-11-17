@@ -92,7 +92,7 @@ public class CadastroCliente extends AppCompatActivity {
                     String nomeCliente = editTextNome.getText().toString();
                     String sobrenomeCliente = ediTextSobrenome.getText().toString();
 
-                    if(!cpfCliente.isEmpty()){
+                    if(!cpfCliente.isEmpty()&&!nomeCliente.isEmpty()&&!sobrenomeCliente.isEmpty()){
                         Cliente cliente = new Cliente();
                         cliente.setCpf(cpfCliente);
                         cliente.setNome(nomeCliente);
@@ -115,6 +115,10 @@ public class CadastroCliente extends AppCompatActivity {
                             }
                         });
 
+                    }else{
+                        Toast.makeText(CadastroCliente.this,
+                                "Preencher todos os campos! ",
+                                Toast.LENGTH_LONG).show();
                     }
 
                 }
