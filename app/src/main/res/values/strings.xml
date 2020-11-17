@@ -13,6 +13,8 @@
     <string name="Senha">Senha do Usuário</string>
     <string name="cadastro_do_usuario">Cadastro do Usuário</string>
     <string name="BotaoSalvar">Salvar</string>
+    <string name="cadastro_de_produto">Cadastro de Produto</string>
+    <string name="incluir_descricao">Incluir Descrição</string>
 
 
 </resources>

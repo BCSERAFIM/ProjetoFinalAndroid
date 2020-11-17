@@ -21,7 +21,6 @@ import com.bcserafim.projetoandroid.helper.ClienteCallback;
 import com.bcserafim.projetoandroid.helper.ClienteFacade;
 import com.bcserafim.projetoandroid.helper.RecyclerItemClickListener;
 import com.bcserafim.projetoandroid.service.ClienteService;
-import com.bcserafim.projetoandroid.service.ProdutoService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;

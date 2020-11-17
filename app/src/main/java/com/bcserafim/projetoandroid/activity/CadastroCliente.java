@@ -25,8 +25,8 @@ public class CadastroCliente extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_cliente);
-        editTextCpf = findViewById(R.id.editTextCpf);
-        editTextNome = findViewById(R.id.editTextNome);
+        editTextCpf = findViewById(R.id.editTextLogin);
+        editTextNome = findViewById(R.id.editTextSenha);
         ediTextSobrenome = findViewById(R.id.editTextSobrenome);
 
         //Recuperar cliente caso seja edição

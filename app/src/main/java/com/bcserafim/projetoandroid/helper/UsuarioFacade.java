@@ -1,8 +1,7 @@
 package com.bcserafim.projetoandroid.helper;
 
-import com.bcserafim.projetoandroid.entity.Cliente;
-import com.bcserafim.projetoandroid.service.ClienteService;
-
+import com.bcserafim.projetoandroid.entity.Usuario;
+import com.bcserafim.projetoandroid.service.UsuarioService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -12,19 +11,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.bcserafim.projetoandroid.activity.MainActivity.BASE_URL;
 
-public class ClienteFacade {
+public class UsuarioFacade {
 
-    public static void cadastrar (Cliente cliente, final ClienteCallback callback){
+
+    public static void cadastrar (Usuario usuario, final UsuarioCallback callback){
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
-        ClienteService service = retrofit.create(ClienteService.class);
-        Call<Cliente> call = service.cadastrarCliente(cliente);
-        call.enqueue(new Callback<Cliente>() {
+        UsuarioService service = retrofit.create(UsuarioService.class);
+        Call<Usuario> call = service.cadastrar(usuario);
+        call.enqueue(new Callback<Usuario>() {
             @Override
-            public void onResponse(Call<Cliente> call, Response<Cliente> response) {
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if(response.isSuccessful()){
                     callback.onSuccess(response.body());
                 }else{
@@ -33,24 +33,25 @@ public class ClienteFacade {
             }
 
             @Override
-            public void onFailure(Call<Cliente> call, Throwable t) {
+            public void onFailure(Call<Usuario> call, Throwable t) {
+
                 callback.onFailure(t);
             }
         });
 
     }
 
-    public static void alterar (Cliente cliente, final ClienteCallback callback){
+    public static void alterar (Usuario usuario, final UsuarioCallback callback){
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
-        ClienteService service = retrofit.create(ClienteService.class);
-        Call<Cliente> call = service.alterar(cliente);
-        call.enqueue(new Callback<Cliente>() {
+        UsuarioService service = retrofit.create(UsuarioService.class);
+        Call<Usuario> call = service.alterar(usuario);
+        call.enqueue(new Callback<Usuario>() {
             @Override
-            public void onResponse(Call<Cliente> call, Response<Cliente> response) {
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if(response.isSuccessful()){
                     callback.onSuccess(response.body());
                 }else{
@@ -59,24 +60,24 @@ public class ClienteFacade {
             }
 
             @Override
-            public void onFailure(Call<Cliente> call, Throwable t) {
+            public void onFailure(Call<Usuario> call, Throwable t) {
                 callback.onFailure(t);
             }
         });
 
     }
 
-    public static void remover (Integer id, final ClienteCallback callback){
+    public static void remover (Integer login, final UsuarioCallback callback){
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
-        ClienteService service = retrofit.create(ClienteService.class);
-        Call<Cliente> call = service.remover(id);
-        call.enqueue(new Callback<Cliente>() {
+        UsuarioService service = retrofit.create(UsuarioService.class);
+        Call<Usuario> call = service.remover(login);
+        call.enqueue(new Callback<Usuario>() {
             @Override
-            public void onResponse(Call<Cliente> call, Response<Cliente> response) {
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if(response.isSuccessful()){
                     callback.onSuccess(response.body());
                 }else{
@@ -85,13 +86,13 @@ public class ClienteFacade {
             }
 
             @Override
-            public void onFailure(Call<Cliente> call, Throwable t) {
+            public void onFailure(Call<Usuario> call, Throwable t) {
                 callback.onFailure(t);
             }
         });
 
     }
-
-
 
 }
+
+

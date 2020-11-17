@@ -1,5 +1,6 @@
 package com.bcserafim.projetoandroid.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -15,8 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.adapter.AdapterUsuario;
+import com.bcserafim.projetoandroid.entity.Produto;
 import com.bcserafim.projetoandroid.entity.Usuario;
 import com.bcserafim.projetoandroid.helper.RecyclerItemClickListener;
+import com.bcserafim.projetoandroid.helper.UsuarioCallback;
+import com.bcserafim.projetoandroid.helper.UsuarioFacade;
 import com.bcserafim.projetoandroid.service.*;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -35,6 +40,7 @@ public class UsuarioActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewUsuario;
     private List<Usuario> listaUsuarios = new ArrayList<>();
+    private Usuario usuarioSelecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,23 +73,56 @@ public class UsuarioActivity extends AppCompatActivity {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                Log.i("Clique", "onItemClick");
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        "Item pressionado: ",
-                                        Toast.LENGTH_SHORT
-                                ).show();
+                                //Recuperar usuario area edicao
+                                usuarioSelecionado = listaUsuarios.get(position);
+
+                                // Enviar usuario para tela Cadastro Usuario
+                                Intent intent = new Intent(UsuarioActivity.this, CadastroUsuario.class);
+                                intent.putExtra("usuarioSelecionado",usuarioSelecionado);
+                                startActivity(intent);
                             }
 
                             @Override
                             public void onLongItemClick(View view, int position) {
-                                Log.i("Clique", "onLongItemClick");
+                                //Recuperar tarefa para deletar
+                                usuarioSelecionado = listaUsuarios.get(position);
 
-                                Toast.makeText(
-                                        getApplicationContext(),
-                                        "Click Longo",
-                                        Toast.LENGTH_SHORT
-                                ).show();
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(UsuarioActivity.this);
+
+                                // Configurar titulo e mensagem
+                                dialog.setTitle("Confirmar Exclusão");
+                                dialog.setMessage("Deseja excluir o usuario: "+usuarioSelecionado.getLogin()+" ?");
+
+                                dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        UsuarioFacade.remover(usuarioSelecionado.getLogin(), new UsuarioCallback() {
+                                            @Override
+                                            public void onSuccess(Usuario usuario) {
+                                                obterUsuarios();
+                                                Toast.makeText(getApplicationContext(),
+                                                        "Sucesso ao excluir usuario  !",
+                                                        Toast.LENGTH_LONG).show();
+                                            }
+
+                                            @Override
+                                            public void onFailure(Throwable t) {
+                                                Toast.makeText(getApplicationContext(),
+                                                        "Erro ao excluir usuario: " +
+                                                                t.getMessage(),
+                                                        Toast.LENGTH_LONG).show();
+
+                                            }
+                                        });
+                                    }
+                                });
+
+                                dialog.setNegativeButton("Não",null);
+
+                                //Exibir dialog
+                                dialog.create();
+                                dialog.show();
 
                             }
 

@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextCpf"
+            android:id="@+id/editTextLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Insira  CPF"
@@ -49,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextNome"
+            android:id="@+id/editTextSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Insira Nome" />
