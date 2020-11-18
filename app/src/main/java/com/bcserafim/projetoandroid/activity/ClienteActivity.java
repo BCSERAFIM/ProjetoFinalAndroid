@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.bcserafim.projetoandroid.BuildConfig;
 import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.adapter.AdapterCliente;
 import com.bcserafim.projetoandroid.entity.Cliente;
@@ -150,7 +151,7 @@ public class ClienteActivity extends AppCompatActivity {
         recyclerViewCliente.setAdapter(adapterCliente); // Adapter vai receber os dados formatar o layout e utilizar no RecycleView
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

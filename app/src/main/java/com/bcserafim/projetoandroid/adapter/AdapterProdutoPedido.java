@@ -19,8 +19,7 @@ public class AdapterProdutoPedido extends RecyclerView.Adapter<AdapterProdutoPed
 
     private List<Produto> listaProdutos;
 
-    public AdapterProdutoPedido(List<Produto> lista) {
-        this.listaProdutos = lista;
+    public AdapterProdutoPedido() {
     }
 
     @NonNull
@@ -60,6 +59,10 @@ public class AdapterProdutoPedido extends RecyclerView.Adapter<AdapterProdutoPed
         if (listaProdutos == null)
             return 0;
         return listaProdutos.size();
+    }
+
+    public void setData(List<Produto> lista) {
+        this.listaProdutos = lista;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

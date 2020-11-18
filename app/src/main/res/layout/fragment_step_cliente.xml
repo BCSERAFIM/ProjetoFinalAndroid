@@ -10,8 +10,7 @@
         android:id="@+id/view_clientes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -29,7 +28,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/view_item_pedido"
+        android:id="@+id/view_resumo_pedido"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -41,23 +40,10 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:text="Produtos" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_produto_pedido"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/view_resumo_pedido"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+            android:text="Resumo do Pedido" />
 
         <TextView
+            android:id="@+id/txt_nome_cliente_resumo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

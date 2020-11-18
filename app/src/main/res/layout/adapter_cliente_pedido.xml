@@ -11,11 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp" />
-
         <TextView
             android:id="@+id/txt_nome_cliente_pedido"
             android:layout_width="wrap_content"
@@ -26,6 +21,11 @@
             android:text="-"
             android:textSize="18sp"
             android:textStyle="bold" />
+        <RadioButton
+            android:id="@+id/radio_button_cliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp" />
 
     </LinearLayout>
 </LinearLayout>

@@ -20,7 +20,12 @@ android {
         debug {
             debuggable true
             minifyEnabled false
-            buildConfigField "String", "BASE_URL", '"http://10.10.0.38:8080/WebServiceAndroid/webresources/"'
+            buildConfigField "String", "BASE_URL", '"http://192.168.100.48:8080/WebServiceAndroid/webresources/"'
+        }
+        homolog {
+            debuggable true
+            minifyEnabled false
+            buildConfigField "String", "BASE_URL", '"http://192.168.100.48:8080/WebServiceAndroid/webresources/"'
         }
         release {
             minifyEnabled false

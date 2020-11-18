@@ -7,15 +7,20 @@ import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
-import com.bcserafim.projetoandroid.fragment.StepFragment;
+import com.bcserafim.projetoandroid.entity.Cliente;
+import com.bcserafim.projetoandroid.fragment.StepClienteFragment;
+import com.bcserafim.projetoandroid.fragment.StepProdutoFragment;
+import com.bcserafim.projetoandroid.fragment.StepResumoFragment;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.adapter.AbstractFragmentStepAdapter;
 import com.stepstone.stepper.viewmodel.StepViewModel;
 
-public class AdapterCadastroPedido extends AbstractFragmentStepAdapter {
+public class AdapterCadastroPedido extends AbstractFragmentStepAdapter implements AdapterClientePedido.SelectedClienteListener {
 
     private static final String CURRENT_STEP_POSITION_KEY = "";
-    private StepFragment step;
+    private StepClienteFragment stepClienteFragment;
+    private StepProdutoFragment stepProdutoFragment;
+    private StepResumoFragment stepResumoFragment;
 
     public AdapterCadastroPedido(FragmentManager fm, Context context) {
         super(fm, context);
@@ -23,28 +28,25 @@ public class AdapterCadastroPedido extends AbstractFragmentStepAdapter {
 
     @Override
     public Step createStep(int position) {
-        step = StepFragment.newInstance(position);
         Bundle b = new Bundle();
         b.putInt(CURRENT_STEP_POSITION_KEY, position);
-        step.setArguments(b);
 
-//        switch (position) {
-//            case 0:
-//                step.viewItemPedido.setVisibility(View.VISIBLE);
-//                step.viewItemPedido.setVisibility(View.GONE);
-//                break;
-//            case 1:
-//                step.viewCliente.setVisibility(View.VISIBLE);
-//                step.viewItemPedido.setVisibility(View.GONE);
-//                break;
-//            default:
-//                step.viewCliente.setVisibility(View.GONE);
-//                step.viewItemPedido.setVisibility(View.GONE);
-//                break;
-//
-//        }
-
-        return step;
+        switch (position) {
+            case 0:
+                stepClienteFragment = StepClienteFragment.newInstance(this);
+                stepClienteFragment.setArguments(b);
+                return stepClienteFragment;
+            case 1:
+                stepProdutoFragment = StepProdutoFragment.newInstance();
+                stepProdutoFragment.setArguments(b);
+                return stepProdutoFragment;
+            case 2:
+                stepResumoFragment = StepResumoFragment.newInstance(null);
+                stepResumoFragment.setArguments(b);
+                return stepResumoFragment;
+            default:
+                return null;
+        }
     }
 
     @Override
@@ -75,4 +77,8 @@ public class AdapterCadastroPedido extends AbstractFragmentStepAdapter {
         }
     }
 
+    @Override
+    public void onSelectCliente(Cliente cliente) {
+
+    }
 }

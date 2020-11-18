@@ -3,6 +3,7 @@ package com.bcserafim.projetoandroid.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,9 +18,18 @@ import java.util.List;
 public class AdapterClientePedido extends RecyclerView.Adapter<AdapterClientePedido.MyViewHolder> {
 
     private List<Cliente> listaCleintes;
+    private Cliente clienteSelecionado;
+    private int mSelectedPosition = -1;
+    private RadioButton mSelectedRB;
 
-    public AdapterClientePedido(List<Cliente> lista) {
-        this.listaCleintes = lista;
+    public SelectedClienteListener listener;
+
+    public AdapterClientePedido(AdapterClientePedido.SelectedClienteListener listener) {
+        this.listener = listener;
+    }
+
+    public interface SelectedClienteListener {
+        void onSelectCliente(Cliente cliente);
     }
 
     @NonNull
@@ -33,9 +43,35 @@ public class AdapterClientePedido extends RecyclerView.Adapter<AdapterClientePed
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Cliente cliente = listaCleintes.get(position);
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+        final Cliente cliente = listaCleintes.get(position);
         holder.nome.setText(cliente.getNome());
+
+        holder.radioBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                if (position != mSelectedPosition && mSelectedRB != null) {
+                    mSelectedRB.setChecked(false);
+                }
+                mSelectedPosition = position;
+                mSelectedRB = (RadioButton) v;
+                listener.onSelectCliente(cliente);
+            }
+        });
+
+
+        if (mSelectedPosition != position) {
+            holder.radioBtn.setChecked(false);
+        } else {
+            holder.radioBtn.setChecked(true);
+            if (mSelectedRB != null && holder.radioBtn != mSelectedRB) {
+                mSelectedRB = holder.radioBtn;
+            }
+        }
+
+
     }
 
     @Override
@@ -45,14 +81,29 @@ public class AdapterClientePedido extends RecyclerView.Adapter<AdapterClientePed
         return listaCleintes.size();
     }
 
+    public void setData(List<Cliente> lista) {
+        this.listaCleintes = lista;
+    }
+
+    public Cliente getCliente() {
+        if (listaCleintes == null && mSelectedPosition <= 0)
+            return null;
+        else
+            return listaCleintes.get(mSelectedPosition);
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView nome;
+        RadioButton radioBtn;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             nome = itemView.findViewById(R.id.txt_nome_cliente_pedido);
+            radioBtn = itemView.findViewById(R.id.radio_button_cliente);
         }
+
+
     }
 
 }
