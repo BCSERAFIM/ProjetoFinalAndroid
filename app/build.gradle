@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        bcserafim {
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
@@ -20,18 +24,32 @@ android {
         debug {
             debuggable true
             minifyEnabled false
-            buildConfigField "String", "BASE_URL", '"http://192.168.100.48:8080/WebServiceAndroid/webresources/"'
+            buildConfigField "String", "BASE_URL", '"http://192.168.15.11:8080/WebServiceAndroid/webresources/"'
         }
-        homolog {
+        carlos {
             debuggable true
             minifyEnabled false
-            buildConfigField "String", "BASE_URL", '"http://192.168.100.48:8080/WebServiceAndroid/webresources/"'
+            buildConfigField "String", "BASE_URL", '"http://192.168.100.70:8080/WebServiceAndroid/webresources/"'
+            signingConfig signingConfigs.debug
         }
+        bcserafim {
+            debuggable true
+            minifyEnabled false
+            buildConfigField "String", "BASE_URL", '"http://192.168.15.11:8080/WebServiceAndroid/webresources/"'
+            signingConfig signingConfigs.debug
+        }
+        wrsilva {
+            debuggable true
+            minifyEnabled false
+            buildConfigField "String", "BASE_URL", '"http://192.168.15.40:8080/WebServiceAndroid/webresources/"'
+            signingConfig signingConfigs.debug
+        }
+
         release {
             minifyEnabled false
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URL", '"http://10.10.0.38:8080/WebServiceAndroid/webresources/"'
+            buildConfigField "String", "BASE_URL", '"http://http://192.168.15.11:8080/WebServiceAndroid/webresources/"'
         }
     }
 }

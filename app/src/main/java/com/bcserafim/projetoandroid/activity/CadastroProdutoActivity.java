@@ -56,6 +56,7 @@ public class CadastroProdutoActivity extends AppCompatActivity {
                 if (produtoAtual != null) {//edição
                     String descricaoProduto = editCadastroProduto.getText().toString();
                     if (!descricaoProduto.isEmpty()) {
+
                         Produto produto = new Produto();
                         produto.setDescricao(descricaoProduto);
                         produto.setId(produtoAtual.getId());

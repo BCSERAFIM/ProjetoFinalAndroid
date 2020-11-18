@@ -60,10 +60,10 @@ public class CadastroClienteActivity extends AppCompatActivity {
                     String nomeCliente = editTextNome.getText().toString();
                     String sobrenomeCliente = ediTextSobrenome.getText().toString();
 
-                    if (!cpfCliente.isEmpty()) {
+                    if (!cpfCliente.isEmpty() && !nomeCliente.isEmpty() && !sobrenomeCliente.isEmpty()) {
 
                         Cliente cliente = new Cliente();
-                        cliente.setCpf(cpfCliente);
+                        cliente.setCpf(clienteAtual.getCpf());
                         cliente.setNome(nomeCliente);
                         cliente.setSobreNome(sobrenomeCliente);
                         cliente.setId(clienteAtual.getId());
@@ -85,6 +85,14 @@ public class CadastroClienteActivity extends AppCompatActivity {
                             }
                         });
 
+                    }else {
+                        if(!cpfCliente.isEmpty()){
+                            editTextCpf.setText(clienteAtual.getCpf());
+                        }if(nomeCliente.isEmpty()){
+                            editTextNome.setError("Campo obrigatório");
+                        }if(sobrenomeCliente.isEmpty()){
+                            ediTextSobrenome.setError("Campo obrigatório");
+                        }
                     }
 
                 } else {//salvar
@@ -116,9 +124,13 @@ public class CadastroClienteActivity extends AppCompatActivity {
                         });
 
                     } else {
-                        Toast.makeText(CadastroClienteActivity.this,
-                                "Preencher todos os campos! ",
-                                Toast.LENGTH_LONG).show();
+                        if(cpfCliente.isEmpty()){
+                            editTextCpf.setError("Campo obrigatório");
+                        }if(nomeCliente.isEmpty()){
+                            editTextNome.setError("Campo obrigatório");
+                        }if(sobrenomeCliente.isEmpty()){
+                            ediTextSobrenome.setError("Campo obrigatório");
+                        }
                     }
 
                 }

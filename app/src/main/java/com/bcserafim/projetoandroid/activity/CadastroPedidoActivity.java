@@ -1,8 +1,8 @@
 package com.bcserafim.projetoandroid.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.adapter.AdapterCadastroPedido;
