@@ -18,6 +18,7 @@ import com.bcserafim.projetoandroid.BuildConfig;
 import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.adapter.AdapterCliente;
 import com.bcserafim.projetoandroid.entity.Cliente;
+import com.bcserafim.projetoandroid.entity.Pedido;
 import com.bcserafim.projetoandroid.helper.callback.ClienteCallback;
 import com.bcserafim.projetoandroid.helper.facade.ClienteFacade;
 import com.bcserafim.projetoandroid.helper.recycler.RecyclerItemClickListener;
@@ -33,12 +34,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.bcserafim.projetoandroid.BuildConfig.BASE_URL;
-
 public class ClienteActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewCliente;
     private List<Cliente> listaClientes = new ArrayList<>();
+    private List<Pedido> listaPedidos = new ArrayList<>();
     private Cliente clienteSelecionado;
 
     @Override
@@ -81,53 +81,69 @@ public class ClienteActivity extends AppCompatActivity {
 
                             @Override
                             public void onLongItemClick(View view, int position) {
-                                //Recuperar cliente para deletar
-                               clienteSelecionado = listaClientes.get(position);
+                               //Recuperar cliente para deletar
+                                clienteSelecionado = listaClientes.get(position);
 
-                                AlertDialog.Builder dialog = new AlertDialog.Builder(ClienteActivity.this);
+                               Integer quanidade = obterPedido(clienteSelecionado, clienteSelecionado.getId()).size();
+                                System.out.println("print: "+quanidade+ "position :"+position);
+                                if (quanidade>0) {
+                                    Toast.makeText(ClienteActivity.this,
+                                            "Cliente possui pedido",
+                                            Toast.LENGTH_LONG).show();
 
-
-                                // Configurar titulo e mensagem
-                                dialog.setTitle("Confirmar Exclusão");
-                                dialog.setMessage("Deseja excluir o cliente "+clienteSelecionado.getNome()+" ?");
-
-                                dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        ClienteFacade.remover(clienteSelecionado.getId(), new ClienteCallback() {
-                                            @Override
-                                            public void onSuccess(Cliente cliente) {
-                                                obterClientes();
-                                                Toast.makeText(getApplicationContext(),
-                                                        "Sucesso ao excluir cliente!",
-                                                        Toast.LENGTH_LONG).show();
-                                            }
-
-                                            @Override
-                                            public void onFailure(Throwable t) {
-                                                Toast.makeText(getApplicationContext(),
-                                                        "Erro ao excluir cliente: " +
-                                                                t.getMessage(),
-                                                        Toast.LENGTH_LONG).show();
-                                            }
-                                        });
-
-                                    }
-                                });
-
-                                dialog.setNegativeButton("Não",null);
+                                } else {
 
 
-                                //Exibir dialog
-                                dialog.create();
-                                dialog.show();
+                                    AlertDialog.Builder dialog = new AlertDialog.Builder(ClienteActivity.this);
 
+
+                                    // Configurar titulo e mensagem
+                                    dialog.setTitle("Confirmar Exclusão");
+                                    dialog.setMessage("Deseja excluir o cliente " + clienteSelecionado.getNome() + " ?");
+
+                                    dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+
+                                            ClienteFacade.remover(clienteSelecionado.getId(), new ClienteCallback() {
+                                                @Override
+                                                public void onSuccess(Cliente cliente) {
+                                                    obterClientes();
+                                                    Toast.makeText(getApplicationContext(),
+                                                            "Sucesso ao excluir cliente!",
+                                                            Toast.LENGTH_LONG).show();
+                                                }
+
+                                                @Override
+                                                public void onFailure(Throwable t) {
+                                                    Toast.makeText(getApplicationContext(),
+                                                            "Erro ao excluir cliente: " +
+                                                                    t.getMessage(),
+                                                            Toast.LENGTH_LONG).show();
+                                                }
+                                            });
+
+                                        }
+                                    });
+
+                                    dialog.setNegativeButton("Não", null);
+
+
+                                    //Exibir dialog
+                                    dialog.create();
+                                    dialog.show();
+                                }
                             }
 
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                @Override
+                                public void onItemClick (AdapterView < ? > parent, View view,
+                                int position, long id){
 
-                            }
+                                }
+
+
+
                         }
                 )
         );
@@ -181,6 +197,33 @@ public class ClienteActivity extends AppCompatActivity {
         });
 
 
+    }
+    public List<Pedido> obterPedido(Cliente cliente, Integer id){
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BuildConfig.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ClienteService service = retrofit.create(ClienteService.class);
+        Call<List<Pedido>> call = service.carregarPedidos(cliente.getId());
+        call.enqueue(new Callback<List<Pedido>>() {
+            @Override
+            public void onResponse(Call<List<Pedido>> call, Response<List<Pedido>> response) {
+                if (response.isSuccessful()) {
+
+                    listaPedidos = response.body();
+
+
+            }
+            }
+
+            @Override
+            public void onFailure(Call<List<Pedido>> call, Throwable t) {
+
+            }
+        });
+        return listaPedidos;
     }
 
     @Override
