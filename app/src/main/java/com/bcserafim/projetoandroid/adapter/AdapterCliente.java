@@ -16,14 +16,16 @@ import java.util.List;
 public class AdapterCliente extends RecyclerView.Adapter<AdapterCliente.MyViewHolder> {
 
     private List<Cliente> listaClientes;
+    private int quantidadePedidos;
 
 
     public AdapterCliente() {
 
     }
 
-    public void update (List<Cliente>lista){
+    public void update(List<Cliente> lista) {
         this.listaClientes = lista;
+
     }
 
     @NonNull
@@ -31,7 +33,7 @@ public class AdapterCliente extends RecyclerView.Adapter<AdapterCliente.MyViewHo
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemLista = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter_cliente,parent,false);
+                .inflate(R.layout.adapter_cliente, parent, false);
 
         return new MyViewHolder(itemLista);
     }
@@ -39,23 +41,24 @@ public class AdapterCliente extends RecyclerView.Adapter<AdapterCliente.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Cliente cliente = listaClientes.get(position);
-        holder.id.setText(String.format("%d",cliente.getId()));
+        holder.id.setText(String.valueOf(cliente.getId()));
         holder.cpf.setText(cliente.getCpf());
         holder.nome.setText(cliente.getNome());
         holder.sobrenome.setText(cliente.getSobreNome());
+
 
 
     }
 
     @Override
     public int getItemCount() {
-        if(this.listaClientes==null)
-        return 0;
+        if (this.listaClientes == null)
+            return 0;
         return this.listaClientes.size();
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView id, cpf, nome, sobrenome;
 
@@ -67,6 +70,7 @@ public class AdapterCliente extends RecyclerView.Adapter<AdapterCliente.MyViewHo
             cpf = itemView.findViewById(R.id.textViewCpfCliente);
             nome = itemView.findViewById(R.id.textViewNomeCliente);
             sobrenome = itemView.findViewById(R.id.textViewSobrenomeCliente);
+
 
         }
     }

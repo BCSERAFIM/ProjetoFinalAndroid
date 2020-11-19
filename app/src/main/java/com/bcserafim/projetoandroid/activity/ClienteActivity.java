@@ -81,67 +81,66 @@ public class ClienteActivity extends AppCompatActivity {
 
                             @Override
                             public void onLongItemClick(View view, int position) {
-                               //Recuperar cliente para deletar
+
+                                //Recuperar cliente para deletar
                                 clienteSelecionado = listaClientes.get(position);
 
-                               Integer quanidade = obterPedido(clienteSelecionado, clienteSelecionado.getId()).size();
-                                System.out.println("print: "+quanidade+ "position :"+position);
-                                if (quanidade>0) {
-                                    Toast.makeText(ClienteActivity.this,
-                                            "Cliente possui pedido",
-                                            Toast.LENGTH_LONG).show();
-
-                                } else {
+                                obterPedido(clienteSelecionado.getId());
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(ClienteActivity.this);
 
 
-                                    AlertDialog.Builder dialog = new AlertDialog.Builder(ClienteActivity.this);
+                                // Configurar titulo e mensagem
+                                dialog.setTitle("Confirmar Exclusão");
+                                dialog.setMessage("Deseja excluir o cliente " + clienteSelecionado.getNome() + " ?");
+
+                                dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
 
-                                    // Configurar titulo e mensagem
-                                    dialog.setTitle("Confirmar Exclusão");
-                                    dialog.setMessage("Deseja excluir o cliente " + clienteSelecionado.getNome() + " ?");
+                                        ClienteFacade.remover(clienteSelecionado.getId(), new ClienteCallback() {
+                                            @Override
+                                            public void onSuccess(Cliente cliente) {
+                                              if( listaPedidos.isEmpty()){
+                                                  obterClientes();
+                                                  Toast.makeText(getApplicationContext(),
+                                                          "Sucesso ao excluir cliente!",
+                                                          Toast.LENGTH_LONG).show();
 
-                                    dialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
+                                              }else {
+                                                  Toast.makeText(getApplicationContext(),
+                                                          "Não posso excluir cliente que possui pedido!",
+                                                          Toast.LENGTH_LONG).show();
+                                              }
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(Throwable t) {
+                                                Toast.makeText(getApplicationContext(),
+                                                        "Erro ao excluir cliente: " +
+                                                                t.getMessage(),
+                                                        Toast.LENGTH_LONG).show();
+                                            }
+                                        });
+
+                                    }
+                                });
+
+                                dialog.setNegativeButton("Não", null);
 
 
-                                            ClienteFacade.remover(clienteSelecionado.getId(), new ClienteCallback() {
-                                                @Override
-                                                public void onSuccess(Cliente cliente) {
-                                                    obterClientes();
-                                                    Toast.makeText(getApplicationContext(),
-                                                            "Sucesso ao excluir cliente!",
-                                                            Toast.LENGTH_LONG).show();
-                                                }
+                                //Exibir dialog
+                                dialog.create();
+                                dialog.show();
 
-                                                @Override
-                                                public void onFailure(Throwable t) {
-                                                    Toast.makeText(getApplicationContext(),
-                                                            "Erro ao excluir cliente: " +
-                                                                    t.getMessage(),
-                                                            Toast.LENGTH_LONG).show();
-                                                }
-                                            });
-
-                                        }
-                                    });
-
-                                    dialog.setNegativeButton("Não", null);
-
-
-                                    //Exibir dialog
-                                    dialog.create();
-                                    dialog.show();
-                                }
                             }
 
-                                @Override
-                                public void onItemClick (AdapterView < ? > parent, View view,
-                                int position, long id){
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view,
+                                                    int position, long id) {
 
-                                }
-
+                            }
 
 
                         }
@@ -149,10 +148,9 @@ public class ClienteActivity extends AppCompatActivity {
         );
 
 
-
     }
 
-    public void obterClientes(){
+    public void obterClientes() {
 
         //Configurar Adapter
 
@@ -198,7 +196,8 @@ public class ClienteActivity extends AppCompatActivity {
 
 
     }
-    public List<Pedido> obterPedido(Cliente cliente, Integer id){
+
+    public void obterPedido(Integer id) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
@@ -206,16 +205,17 @@ public class ClienteActivity extends AppCompatActivity {
                 .build();
 
         ClienteService service = retrofit.create(ClienteService.class);
-        Call<List<Pedido>> call = service.carregarPedidos(cliente.getId());
+        Call<List<Pedido>> call = service.carregarPedidos(id);
         call.enqueue(new Callback<List<Pedido>>() {
             @Override
             public void onResponse(Call<List<Pedido>> call, Response<List<Pedido>> response) {
                 if (response.isSuccessful()) {
 
+
                     listaPedidos = response.body();
 
 
-            }
+                }
             }
 
             @Override
@@ -223,7 +223,7 @@ public class ClienteActivity extends AppCompatActivity {
 
             }
         });
-        return listaPedidos;
+
     }
 
     @Override

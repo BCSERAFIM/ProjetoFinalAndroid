@@ -40,6 +40,7 @@ public class AdapterProdutoPedido extends RecyclerView.Adapter<AdapterProdutoPed
         holder.btnMais.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 produto.setQtd(produto.getQtd() + 1);
                 holder.qtd.setText(String.valueOf(produto.getQtd()));
             }
