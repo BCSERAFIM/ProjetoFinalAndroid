@@ -29,7 +29,7 @@ android {
         carlos {
             debuggable true
             minifyEnabled false
-            buildConfigField "String", "BASE_URL", '"http://192.168.100.70:8080/WebServiceAndroid/webresources/"'
+            buildConfigField "String", "BASE_URL", '"http://10.10.0.38:8080/WebServiceAndroid/webresources/"'
             signingConfig signingConfigs.debug
         }
         bcserafim {
@@ -62,7 +62,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.3.1'
     implementation 'androidx.navigation:navigation-ui:2.3.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'

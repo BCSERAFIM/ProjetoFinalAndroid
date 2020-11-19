@@ -6,8 +6,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textViewLoginUser"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_weight="1"
+            android:text="@string/Login" />
 
         <TextView
             android:id="@+id/textViewLoginUsuario"
@@ -15,17 +22,30 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:inputType="number"
-            android:text="1"
-            android:textSize="18sp"
+            android:text="@string/Login"
+            android:textSize="14sp"
             android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textSenhaUser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="@string/Senha" />
 
         <TextView
             android:id="@+id/textViewSenhaUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:text="Login"
-            android:textSize="18sp"
+            android:text="@string/Senha"
+            android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>
