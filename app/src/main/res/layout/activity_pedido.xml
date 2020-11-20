@@ -17,13 +17,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_pedido"
+        <ExpandableListView
+            android:id="@+id/expandableListPedido"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp" />
+            android:layout_margin="10dp"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="0.5dp"
+            android:groupIndicator="@null" />
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

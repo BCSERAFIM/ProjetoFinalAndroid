@@ -18,8 +18,6 @@ import java.util.List;
 public class AdapterClientePedido extends RecyclerView.Adapter<AdapterClientePedido.MyViewHolder> {
 
     private List<Cliente> listaCleintes;
-    private Cliente clienteSelecionado;
-    private int mSelectedPosition = -1;
     private RadioButton mSelectedRB;
 
     public SelectedClienteListener listener;
@@ -51,27 +49,27 @@ public class AdapterClientePedido extends RecyclerView.Adapter<AdapterClientePed
 
             @Override
             public void onClick(View v) {
-
-                if (position != mSelectedPosition && mSelectedRB != null) {
+                if (mSelectedRB != null && mSelectedRB.isChecked()) {
                     mSelectedRB.setChecked(false);
                 }
-                mSelectedPosition = position;
                 mSelectedRB = (RadioButton) v;
+                mSelectedRB.setChecked(true);
                 listener.onSelectCliente(cliente);
             }
         });
 
-
-        if (mSelectedPosition != position) {
-            holder.radioBtn.setChecked(false);
-        } else {
+        if (heClienteSelecionado(cliente)) {
             holder.radioBtn.setChecked(true);
             if (mSelectedRB != null && holder.radioBtn != mSelectedRB) {
                 mSelectedRB = holder.radioBtn;
             }
+        } else {
+            holder.radioBtn.setChecked(false);
         }
+    }
 
-
+    public boolean heClienteSelecionado(Cliente cliente) {
+        return (AdapterCadastroPedido.clienteSelecionado != null && AdapterCadastroPedido.clienteSelecionado.getId().equals(cliente.getId()));
     }
 
     @Override
@@ -83,13 +81,6 @@ public class AdapterClientePedido extends RecyclerView.Adapter<AdapterClientePed
 
     public void setData(List<Cliente> lista) {
         this.listaCleintes = lista;
-    }
-
-    public Cliente getCliente() {
-        if (listaCleintes == null && mSelectedPosition <= 0)
-            return null;
-        else
-            return listaCleintes.get(mSelectedPosition);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

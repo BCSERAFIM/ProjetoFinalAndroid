@@ -8,4 +8,7 @@
     <color name="azulOscuro">#0120BD</color>
 
     <color name="sinza">#BCBCBD</color>
+
+    <color name="status_sucess">#72BC00</color>
+    <color name="azul_link">#001D42</color>
 </resources>

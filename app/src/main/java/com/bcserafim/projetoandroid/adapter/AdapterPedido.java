@@ -1,58 +1,130 @@
 package com.bcserafim.projetoandroid.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.bcserafim.projetoandroid.R;
+import com.bcserafim.projetoandroid.activity.PedidoActivity;
+import com.bcserafim.projetoandroid.entity.Cliente;
 import com.bcserafim.projetoandroid.entity.Pedido;
-import com.bcserafim.projetoandroid.entity.Produto;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterPedido extends RecyclerView.Adapter<AdapterPedido.MyViewHolder> {
+import com.bcserafim.projetoandroid.R;
+
+public class AdapterPedido extends BaseExpandableListAdapter {
 
     private List<Pedido> listaPedidos;
+    private List<Cliente> listaClientes;
+    private Context context;
+    private LayoutInflater infalInflater;
 
-    public AdapterPedido(List<Pedido> lista) {
-        this.listaPedidos = lista;
+    public AdapterPedido(Context context) {
+        this.context = context;
     }
 
-    @NonNull
-    @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View itemLista = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter_pedido, parent, false);
-
-        return new MyViewHolder(itemLista);
-    }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Pedido produto = listaPedidos.get(position);
-        holder.id.setText("Pedido #" + produto.getId());
-    }
-
-    @Override
-    public int getItemCount() {
-        if (listaPedidos == null)
+    public int getGroupCount() {
+        if (listaClientes == null)
             return 0;
-        return listaPedidos.size();
+        return listaClientes.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public int getChildrenCount(int groupPosition) {
+        return quantidadePedidoPorCliente(listaClientes.get(groupPosition).getId());
+    }
 
-        TextView id;
+    @Override
+    public Object getGroup(int groupPosition) {
+        return listaClientes.get(groupPosition);
+    }
 
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-            id = itemView.findViewById(R.id.txt_id_pedido);
+    @Override
+    public Object getChild(int groupPosition, int childPosition) {
+        final Cliente cliente = (Cliente) getGroup(groupPosition);
+        return listaPedidosDoCliente(cliente.getId()).get(childPosition);
+    }
+
+    @Override
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
+    }
+
+    @Override
+    public long getChildId(int groupPosition, int childPosition) {
+        return childPosition;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return false;
+    }
+
+    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded, View view, ViewGroup parent) {
+        if (view == null) {
+            LayoutInflater infalInflater = (LayoutInflater) this.context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = infalInflater.inflate(R.layout.template_cliente_pedido, null);
         }
+        final Cliente cliente = (Cliente) getGroup(groupPosition);
+
+        ((TextView) view.findViewById(R.id.txt_nome_cliente_pedido)).setText(cliente.getNome());
+        ((ImageView) view.findViewById(R.id.seta_lista)).setActivated(isExpanded);
+
+        return view;
     }
 
+    @Override
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        if (infalInflater == null) {
+            infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+        convertView = infalInflater.inflate(R.layout.template_pedido_cliente, null);
+
+        final Pedido pedido = (Pedido) getChild(groupPosition, childPosition);
+
+        ((TextView) convertView.findViewById(R.id.txt_desc_pedido)).setText(pedido.getId() + " - " + pedido.getData());
+
+        return convertView;
+    }
+
+    @Override
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
+    }
+
+
+    public void setDataPedidos(List<Pedido> listaPedidos) {
+        this.listaPedidos = listaPedidos;
+    }
+
+    public void setDataClientes(List<Cliente> listaClientes) {
+        this.listaClientes = listaClientes;
+    }
+
+    private int quantidadePedidoPorCliente(int idCliente) {
+        int qtd = 0;
+        for (Pedido pedido : listaPedidos) {
+            if (pedido.getCliente().getId() == idCliente)
+                qtd++;
+        }
+        return qtd;
+    }
+
+    private List<Pedido> listaPedidosDoCliente(int idCliente) {
+        List<Pedido> pedidos = new ArrayList<>();
+        for (Pedido pedido : listaPedidos) {
+            if (pedido.getCliente().getId() == idCliente)
+                pedidos.add(pedido);
+        }
+        return pedidos;
+    }
 }

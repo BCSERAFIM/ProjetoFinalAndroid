@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bcserafim.projetoandroid.BuildConfig;
 import com.bcserafim.projetoandroid.R;
+import com.bcserafim.projetoandroid.adapter.AdapterCadastroPedido;
 import com.bcserafim.projetoandroid.adapter.AdapterClientePedido;
 import com.bcserafim.projetoandroid.adapter.AdapterProdutoPedido;
 import com.bcserafim.projetoandroid.entity.Cliente;
@@ -25,6 +27,7 @@ import com.bcserafim.projetoandroid.service.ProdutoService;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -49,6 +52,8 @@ public class StepProdutoFragment extends Fragment implements Step {
         StepProdutoFragment fragment = new StepProdutoFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        AdapterCadastroPedido.produtosSelecionados = new ArrayList<>();
+
         return fragment;
     }
 
@@ -73,6 +78,9 @@ public class StepProdutoFragment extends Fragment implements Step {
     @Nullable
     @Override
     public VerificationError verifyStep() {
+        if (AdapterCadastroPedido.produtosSelecionados == null || AdapterCadastroPedido.produtosSelecionados.size() <= 0) {
+            return new VerificationError("Selecione produtos.");
+        }
         return null;
     }
 
@@ -83,7 +91,9 @@ public class StepProdutoFragment extends Fragment implements Step {
 
     @Override
     public void onError(@NonNull VerificationError error) {
-
+        Toast.makeText(getContext(),
+                error.getErrorMessage(),
+                Toast.LENGTH_LONG).show();
     }
 
     @Override

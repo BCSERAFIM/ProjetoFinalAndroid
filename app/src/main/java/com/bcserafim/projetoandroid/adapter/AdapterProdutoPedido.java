@@ -43,6 +43,7 @@ public class AdapterProdutoPedido extends RecyclerView.Adapter<AdapterProdutoPed
 
                 produto.setQtd(produto.getQtd() + 1);
                 holder.qtd.setText(String.valueOf(produto.getQtd()));
+                atualizarList(produto);
             }
         });
 
@@ -51,6 +52,7 @@ public class AdapterProdutoPedido extends RecyclerView.Adapter<AdapterProdutoPed
             public void onClick(View view) {
                 produto.setQtd(produto.getQtd() - 1);
                 holder.qtd.setText(String.valueOf(produto.getQtd()));
+                atualizarList(produto);
             }
         });
     }
@@ -60,6 +62,13 @@ public class AdapterProdutoPedido extends RecyclerView.Adapter<AdapterProdutoPed
         if (listaProdutos == null)
             return 0;
         return listaProdutos.size();
+    }
+
+    private void atualizarList(Produto produto) {
+        AdapterCadastroPedido.produtosSelecionados.remove(produto);
+        if (produto.getQtd() > 0) {
+            AdapterCadastroPedido.produtosSelecionados.add(produto);
+        }
     }
 
     public void setData(List<Produto> lista) {

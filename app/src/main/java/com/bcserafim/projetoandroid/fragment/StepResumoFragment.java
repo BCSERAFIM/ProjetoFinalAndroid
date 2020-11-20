@@ -14,36 +14,28 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bcserafim.projetoandroid.BuildConfig;
 import com.bcserafim.projetoandroid.R;
-import com.bcserafim.projetoandroid.adapter.AdapterClientePedido;
+import com.bcserafim.projetoandroid.adapter.AdapterCadastroPedido;
 import com.bcserafim.projetoandroid.adapter.AdapterProdutoPedido;
+import com.bcserafim.projetoandroid.adapter.AdapterProdutoResumoPedido;
 import com.bcserafim.projetoandroid.entity.Cliente;
-import com.bcserafim.projetoandroid.entity.Produto;
-import com.bcserafim.projetoandroid.service.ClienteService;
-import com.bcserafim.projetoandroid.service.ProdutoService;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class StepResumoFragment extends Fragment implements Step {
 
-
     private TextView nomeClienteResumo;
+    private RecyclerView recyclerViewProdutoPedido;
+
+
+    private AdapterProdutoResumoPedido adapterProdutos;
 
     public StepResumoFragment() {
         // Required empty public constructor
     }
 
-    public static StepResumoFragment newInstance(Cliente cliente) {
+    public static StepResumoFragment newInstance() {
         StepResumoFragment fragment = new StepResumoFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -56,6 +48,7 @@ public class StepResumoFragment extends Fragment implements Step {
         if (getArguments() != null) {
 
         }
+
     }
 
     @Override
@@ -65,7 +58,9 @@ public class StepResumoFragment extends Fragment implements Step {
 
 
         nomeClienteResumo = view.findViewById(R.id.txt_nome_cliente_resumo);
+        recyclerViewProdutoPedido = view.findViewById(R.id.rv_resumo_pedido_resumo);
 
+        carregarTelaResumo();
         return view;
     }
 
@@ -77,7 +72,10 @@ public class StepResumoFragment extends Fragment implements Step {
 
     @Override
     public void onSelected() {
-
+        if (AdapterCadastroPedido.clienteSelecionado != null) {
+            nomeClienteResumo.setText(AdapterCadastroPedido.clienteSelecionado.getNome());
+        }
+        carregarDadosProdutos();
     }
 
     @Override
@@ -87,16 +85,25 @@ public class StepResumoFragment extends Fragment implements Step {
 
     @Override
     public void onResume() {
-        carregarTelaResumo();
-        carregarDadosResumo();
         super.onResume();
     }
 
+    public void setCliente(Cliente cliente) {
+        nomeClienteResumo.setText(cliente.getNome());
+    }
+
     private void carregarTelaResumo() {
-
+        adapterProdutos = new AdapterProdutoResumoPedido();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerViewProdutoPedido.setLayoutManager(layoutManager);
+        recyclerViewProdutoPedido.setHasFixedSize(true);
+        recyclerViewProdutoPedido.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
+        recyclerViewProdutoPedido.setAdapter(adapterProdutos);
     }
 
-    private void carregarDadosResumo() {
-        nomeClienteResumo.setText("Nome do Cliente");
+    private void carregarDadosProdutos() {
+        adapterProdutos.setData(AdapterCadastroPedido.produtosSelecionados);
+        adapterProdutos.notifyDataSetChanged();
     }
+
 }

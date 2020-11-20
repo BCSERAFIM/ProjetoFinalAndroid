@@ -9,13 +9,18 @@ public class Produto implements Serializable {
     private Integer Qtd;
 
     public Integer getQtd() {
-        return Qtd;
+        if (Qtd == null)
+            return 0;
+        else
+            return Qtd;
     }
 
     public void setQtd(Integer qtd) {
-        Qtd = qtd;
+        if (qtd < 0)
+            Qtd = 0;
+        else
+            Qtd = qtd;
     }
-
 
     public Integer getId() {
         return id;

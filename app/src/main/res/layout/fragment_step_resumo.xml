@@ -31,7 +31,7 @@
             android:text="-" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_resumo_pedido"
+            android:id="@+id/rv_resumo_pedido_resumo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />

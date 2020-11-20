@@ -14,9 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bcserafim.projetoandroid.BuildConfig;
 import com.bcserafim.projetoandroid.R;
+import com.bcserafim.projetoandroid.adapter.AdapterCadastroPedido;
 import com.bcserafim.projetoandroid.adapter.AdapterClientePedido;
 import com.bcserafim.projetoandroid.adapter.AdapterProdutoPedido;
 import com.bcserafim.projetoandroid.entity.Cliente;
@@ -51,6 +53,7 @@ public class StepClienteFragment extends Fragment implements Step {
         Bundle args = new Bundle();
         fragment.listener = listener;
         fragment.setArguments(args);
+        AdapterCadastroPedido.clienteSelecionado = null;
         return fragment;
     }
 
@@ -68,6 +71,7 @@ public class StepClienteFragment extends Fragment implements Step {
         View view = inflater.inflate(R.layout.fragment_step_cliente, container, false);
 
         recyclerViewClientePedido = view.findViewById(R.id.rv_cliente_pedido);
+        carregarTelaClientes();
 
         return view;
     }
@@ -75,26 +79,29 @@ public class StepClienteFragment extends Fragment implements Step {
     @Nullable
     @Override
     public VerificationError verifyStep() {
-        return null;
+        if (AdapterCadastroPedido.clienteSelecionado == null || AdapterCadastroPedido.clienteSelecionado.getId() <= 0) {
+            return new VerificationError("Selecione o cliente");
+        } else
+            return null;
     }
 
     @Override
     public void onSelected() {
-
+        carregarDadosClientes();
     }
 
     @Override
     public void onError(@NonNull VerificationError error) {
-
+        Toast.makeText(getContext(),
+                error.getErrorMessage(),
+                Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onResume() {
-        carregarTelaClientes();
-        carregarDadosClientes();
+
         super.onResume();
     }
-
 
     private void carregarTelaClientes() {
         adapterClientes = new AdapterClientePedido(listener);
@@ -104,7 +111,6 @@ public class StepClienteFragment extends Fragment implements Step {
         recyclerViewClientePedido.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
         recyclerViewClientePedido.setAdapter(adapterClientes);
     }
-
 
     private void carregarDadosClientes() {
         Retrofit retrofit = new Retrofit.Builder()

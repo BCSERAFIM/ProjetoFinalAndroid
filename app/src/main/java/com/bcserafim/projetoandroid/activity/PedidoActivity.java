@@ -1,71 +1,120 @@
 package com.bcserafim.projetoandroid.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bcserafim.projetoandroid.BuildConfig;
 import com.bcserafim.projetoandroid.R;
-import com.bcserafim.projetoandroid.adapter.AdapterCadastroPedido;
 import com.bcserafim.projetoandroid.adapter.AdapterPedido;
+import com.bcserafim.projetoandroid.entity.Cliente;
 import com.bcserafim.projetoandroid.entity.Pedido;
+import com.bcserafim.projetoandroid.service.PedidoService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.stepstone.stepper.StepperLayout;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PedidoActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private RecyclerView recyclerViewPedido;
     private FloatingActionButton fabPedido;
 
     private List<Pedido> listaPedidos;
+
+    private AdapterPedido adapterPedido;
+    private ExpandableListView expandableListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedido);
 
-        recyclerViewPedido = findViewById(R.id.rv_pedido);
+        expandableListView = findViewById(R.id.expandableListPedido);
         fabPedido = findViewById(R.id.fab_pedido);
 
         fabPedido.setOnClickListener(this);
 
-        carregarDados();
-        carregarTela();
+        if (adapterPedido == null) {
+            adapterPedido = new AdapterPedido(this);
+        }
+        expandableListView.setAdapter(adapterPedido);
+
     }
 
-    private void carregarTela() {
-        AdapterPedido adapterProduto = new AdapterPedido(listaPedidos);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerViewPedido.setLayoutManager(layoutManager);
-        recyclerViewPedido.setHasFixedSize(true);
-        recyclerViewPedido.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
-        recyclerViewPedido.setAdapter(adapterProduto);
+    @Override
+    protected void onResume() {
+        carregarDados();
+        super.onResume();
     }
 
     private void carregarDados() {
-        //TODO: Buscar dados da API
-        listaPedidos = new ArrayList<>();
-        Pedido pedido1 = new Pedido();
-        pedido1.setId(1);
-        listaPedidos.add(pedido1);
-        Pedido pedido2 = new Pedido();
-        pedido2.setId(2);
-        listaPedidos.add(pedido2);
-        Pedido pedido3 = new Pedido();
-        pedido3.setId(3);
-        listaPedidos.add(pedido3);
-        Pedido pedido4 = new Pedido();
-        pedido3.setId(4);
-        listaPedidos.add(pedido4);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BuildConfig.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        PedidoService service = retrofit.create(PedidoService.class);
+        Call<List<Pedido>> call = service.carregarTodosPedidos();
+        call.enqueue(new Callback<List<Pedido>>() {
+            @Override
+            public void onResponse(Call<List<Pedido>> call, Response<List<Pedido>> response) {
+                if (response.isSuccessful()) {
+                    listaPedidos = response.body();
+                    List<Cliente> clientes = new ArrayList<>();
+                    for (Pedido pedido : listaPedidos) {
+                        boolean clienteAdicioando = false;
+                        for (Cliente cliente : clientes) {
+                            if (cliente.getId() == pedido.getCliente().getId()) {
+                                clienteAdicioando = true;
+                                break;
+                            }
+                        }
+                        if (!clienteAdicioando)
+                            clientes.add(pedido.getCliente());
+                    }
+                    adapterPedido.setDataClientes(clientes);
+                    adapterPedido.setDataPedidos(listaPedidos);
+                    adapterPedido.notifyDataSetChanged();
+                } else {
+                    System.out.println(response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Pedido>> call, Throwable t) {
+                adapterPedido.setDataClientes(null);
+                adapterPedido.setDataPedidos(null);
+                adapterPedido.notifyDataSetChanged();
+                t.printStackTrace();
+
+            }
+        });
+
     }
+
 
     @Override
     public void onClick(View view) {

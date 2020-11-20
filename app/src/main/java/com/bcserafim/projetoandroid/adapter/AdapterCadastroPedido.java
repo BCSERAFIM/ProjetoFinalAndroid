@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
 import com.bcserafim.projetoandroid.entity.Cliente;
+import com.bcserafim.projetoandroid.entity.Produto;
 import com.bcserafim.projetoandroid.fragment.StepClienteFragment;
 import com.bcserafim.projetoandroid.fragment.StepProdutoFragment;
 import com.bcserafim.projetoandroid.fragment.StepResumoFragment;
@@ -15,12 +16,16 @@ import com.stepstone.stepper.Step;
 import com.stepstone.stepper.adapter.AbstractFragmentStepAdapter;
 import com.stepstone.stepper.viewmodel.StepViewModel;
 
+import java.util.List;
+
 public class AdapterCadastroPedido extends AbstractFragmentStepAdapter implements AdapterClientePedido.SelectedClienteListener {
 
     private static final String CURRENT_STEP_POSITION_KEY = "";
     private StepClienteFragment stepClienteFragment;
     private StepProdutoFragment stepProdutoFragment;
     private StepResumoFragment stepResumoFragment;
+    public static Cliente clienteSelecionado;
+    public static List<Produto> produtosSelecionados;
 
     public AdapterCadastroPedido(FragmentManager fm, Context context) {
         super(fm, context);
@@ -41,7 +46,7 @@ public class AdapterCadastroPedido extends AbstractFragmentStepAdapter implement
                 stepProdutoFragment.setArguments(b);
                 return stepProdutoFragment;
             case 2:
-                stepResumoFragment = StepResumoFragment.newInstance(null);
+                stepResumoFragment = StepResumoFragment.newInstance();
                 stepResumoFragment.setArguments(b);
                 return stepResumoFragment;
             default:
@@ -73,12 +78,11 @@ public class AdapterCadastroPedido extends AbstractFragmentStepAdapter implement
                 return new StepViewModel.Builder(context)
                         .setTitle("Finalizar Pedido") //can be a CharSequence instead
                         .create();
-
         }
     }
 
     @Override
     public void onSelectCliente(Cliente cliente) {
-
+        clienteSelecionado = cliente;
     }
 }
