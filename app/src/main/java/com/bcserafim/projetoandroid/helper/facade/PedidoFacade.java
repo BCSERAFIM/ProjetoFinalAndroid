@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PedidoFacade {
 
-    public static void cadastrar (Pedido pedido, final PedidoCallback callback){
+    public static void cadastrar(Pedido pedido, final PedidoCallback callback) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
@@ -31,9 +31,9 @@ public class PedidoFacade {
         call.enqueue(new Callback<Pedido>() {
             @Override
             public void onResponse(Call<Pedido> call, Response<Pedido> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     callback.onSuccess(response.body());
-                }else{
+                } else {
                     callback.onFailure(new Exception(response.errorBody().toString()));
                 }
             }

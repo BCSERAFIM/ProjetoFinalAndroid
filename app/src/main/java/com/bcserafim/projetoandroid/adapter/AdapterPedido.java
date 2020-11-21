@@ -8,6 +8,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.activity.PedidoActivity;
 import com.bcserafim.projetoandroid.entity.Cliente;
 import com.bcserafim.projetoandroid.entity.Pedido;
@@ -15,17 +16,21 @@ import com.bcserafim.projetoandroid.entity.Pedido;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bcserafim.projetoandroid.R;
-
 public class AdapterPedido extends BaseExpandableListAdapter {
 
     private List<Pedido> listaPedidos;
     private List<Cliente> listaClientes;
     private Context context;
     private LayoutInflater infalInflater;
+    public SelectedPedidoListener listener;
 
-    public AdapterPedido(Context context) {
+    public interface SelectedPedidoListener {
+        void onSelectPedido(Pedido pedido);
+    }
+
+    public AdapterPedido(Context context, SelectedPedidoListener listener) {
         this.context = context;
+        this.listener = listener;
     }
 
 
@@ -92,6 +97,13 @@ public class AdapterPedido extends BaseExpandableListAdapter {
         final Pedido pedido = (Pedido) getChild(groupPosition, childPosition);
 
         ((TextView) convertView.findViewById(R.id.txt_desc_pedido)).setText(pedido.getId() + " - " + pedido.getData());
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onSelectPedido(pedido);
+            }
+        });
 
         return convertView;
     }

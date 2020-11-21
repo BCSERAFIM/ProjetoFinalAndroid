@@ -20,8 +20,11 @@ public interface PedidoService {
     Call<Pedido> carregarPedido();
 
     @GET("pedido")
-    Call<List<Pedido>>carregarTodosPedidos();
+    Call<List<Pedido>> carregarTodosPedidos();
+
+    @GET("pedido/itens/{id}")
+    Call<Pedido> carregarTodosItensPedido(@Path("id") Integer id);
 
     @POST("pedido")
-    Call<Pedido>cadastrarPedido(@Body Pedido cliente);
+    Call<Pedido> cadastrarPedido(@Body Pedido cliente);
 }

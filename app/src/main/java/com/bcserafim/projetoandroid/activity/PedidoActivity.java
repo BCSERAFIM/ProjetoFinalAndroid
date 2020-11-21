@@ -1,35 +1,24 @@
 package com.bcserafim.projetoandroid.activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentManager;
 
 import com.bcserafim.projetoandroid.BuildConfig;
 import com.bcserafim.projetoandroid.R;
 import com.bcserafim.projetoandroid.adapter.AdapterPedido;
 import com.bcserafim.projetoandroid.entity.Cliente;
 import com.bcserafim.projetoandroid.entity.Pedido;
+import com.bcserafim.projetoandroid.fragment.ModalItensPedidoFragment;
 import com.bcserafim.projetoandroid.service.PedidoService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,7 +26,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PedidoActivity extends AppCompatActivity implements View.OnClickListener {
+public class PedidoActivity extends AppCompatActivity implements View.OnClickListener, AdapterPedido.SelectedPedidoListener {
 
     private FloatingActionButton fabPedido;
 
@@ -57,7 +46,7 @@ public class PedidoActivity extends AppCompatActivity implements View.OnClickLis
         fabPedido.setOnClickListener(this);
 
         if (adapterPedido == null) {
-            adapterPedido = new AdapterPedido(this);
+            adapterPedido = new AdapterPedido(this, this);
         }
         expandableListView.setAdapter(adapterPedido);
 
@@ -115,7 +104,6 @@ public class PedidoActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -124,5 +112,35 @@ public class PedidoActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
         }
+    }
+
+    @Override
+    public void onSelectPedido(Pedido pedido) {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BuildConfig.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        PedidoService service = retrofit.create(PedidoService.class);
+        Call<Pedido> call = service.carregarTodosItensPedido(pedido.getId());
+        call.enqueue(new Callback<Pedido>() {
+            @Override
+            public void onResponse(Call<Pedido> call, Response<Pedido> response) {
+                if (response.isSuccessful()) {
+                    Pedido pedido = response.body();
+                    FragmentManager fm = getSupportFragmentManager();
+                    ModalItensPedidoFragment editNameDialogFragment = ModalItensPedidoFragment.newInstance(pedido, PedidoActivity.this);
+                    editNameDialogFragment.show(fm, "fragment_modal_item_pedido");
+                } else {
+                    System.out.println(response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Pedido> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }
