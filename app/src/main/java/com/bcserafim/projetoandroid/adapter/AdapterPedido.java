@@ -13,6 +13,7 @@ import com.bcserafim.projetoandroid.activity.PedidoActivity;
 import com.bcserafim.projetoandroid.entity.Cliente;
 import com.bcserafim.projetoandroid.entity.Pedido;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class AdapterPedido extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        final Cliente cliente = (Cliente) getGroup(groupPosition);
+       final Cliente cliente = (Cliente) getGroup(groupPosition);
         return listaPedidosDoCliente(cliente.getId()).get(childPosition);
     }
 
@@ -95,8 +96,10 @@ public class AdapterPedido extends BaseExpandableListAdapter {
         convertView = infalInflater.inflate(R.layout.template_pedido_cliente, null);
 
         final Pedido pedido = (Pedido) getChild(groupPosition, childPosition);
+        SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+        String dataformatada = formatador.format(pedido.getData());
 
-        ((TextView) convertView.findViewById(R.id.txt_desc_pedido)).setText(pedido.getId() + " - " + pedido.getData());
+        ((TextView) convertView.findViewById(R.id.txt_desc_pedido)).setText(pedido.getId() + " - " + dataformatada);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
