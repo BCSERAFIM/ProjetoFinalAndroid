@@ -83,7 +83,7 @@ public class AdapterPedido extends BaseExpandableListAdapter {
         }
         final Cliente cliente = (Cliente) getGroup(groupPosition);
 
-        ((TextView) view.findViewById(R.id.txt_nome_cliente_pedido)).setText(cliente.getNome());
+        ((TextView) view.findViewById(R.id.txt_nome_cliente_pedido)).setText(cliente.getId()+"-"+cliente.getNome());
         ((ImageView) view.findViewById(R.id.seta_lista)).setActivated(isExpanded);
 
         return view;
