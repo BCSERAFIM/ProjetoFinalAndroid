@@ -16,6 +16,7 @@ import com.bcserafim.projetoandroid.entity.Pedido;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 public class AdapterPedido extends BaseExpandableListAdapter {
 
@@ -97,7 +98,9 @@ public class AdapterPedido extends BaseExpandableListAdapter {
 
         final Pedido pedido = (Pedido) getChild(groupPosition, childPosition);
         SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+        formatador.setTimeZone(TimeZone.getTimeZone("GMT+12:00"));
         String dataformatada = formatador.format(pedido.getData());
+
 
         ((TextView) convertView.findViewById(R.id.txt_desc_pedido)).setText(pedido.getId() + " - " + dataformatada);
 

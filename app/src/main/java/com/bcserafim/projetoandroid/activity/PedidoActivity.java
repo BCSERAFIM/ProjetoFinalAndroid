@@ -40,6 +40,7 @@ public class PedidoActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedido);
 
+
         expandableListView = findViewById(R.id.expandableListPedido);
         fabPedido = findViewById(R.id.fab_pedido);
 
